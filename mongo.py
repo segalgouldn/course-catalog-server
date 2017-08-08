@@ -2,8 +2,9 @@
 
 from flask import Flask
 from flask import jsonify
-from flask_pymongo import PyMongo
 from flask import render_template
+from flask import request
+from flask_pymongo import PyMongo
 
 
 app = Flask(__name__)
@@ -16,6 +17,17 @@ mongo = PyMongo(app)
 
 @app.route('/')
 def index():
+    search_query = request.args.get('search', None)
+    if search_query is not None:
+        mongo.db.courselist.drop_indexes()
+        mongo.db.courselist.create_index([("$**", "text")], name="textScore")
+        cursor = mongo.db.courselist.find({'$text': {'$search': search_query.replace("+", " ")}}, {'score': {'$meta': 'textScore'}})
+        cursor.sort([('score', {'$meta': 'textScore'})])
+        output = list(sorted(dict(c).items()) for c in cursor)
+        for course in output:
+            del course[11]
+        if len(output) >= 1:
+            return render_template('index.html', output=output)
     courses = mongo.db.courselist
     output = [sorted(c.items()) for c in courses.find()]
     return render_template('index.html', output=output)
