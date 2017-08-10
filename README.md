@@ -4,7 +4,7 @@ Using MongoDB and Flask to serve up some freshly baked courses to students (bett
 
 The project will have three parts:
 * Web-scraping course catalogs ✔️
-* Better serving course catalogs (compared to the current site) ¯\\_(ツ)_/¯
+* Better serving course catalogs (compared to the current site) **¯\\_(ツ)_/¯**
 * Machine learning to predict future potential course catalogs
 
 At the moment, the server program relies on a preexisting MongoDB database called `courselist`. I created it using the following command in the Bash terminal.
