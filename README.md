@@ -12,3 +12,7 @@ At the moment, the server program relies on a preexisting MongoDB database calle
 `mongoimport --db courselist --file courselist.json --jsonArray`
 
 This project was partially inspired by [@sabo](https://github.com/sabo).
+
+### Related Repositories:
+* [Course Catalog Parser](https://github.com/segalgouldn/sproj-course-catalog-parser)
+* [Course Catalog Classifier](https://github.com/segalgouldn/sproj-course-catalog-classifier)
