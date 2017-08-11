@@ -17,6 +17,11 @@ mongo = PyMongo(app)
 
 @app.route('/')
 def index():
+    return render_template('home.html')
+
+
+@app.route('/all')
+def get_all_courses():
     search_query = request.args.get('search', None)
     if search_query is not None:
         mongo.db.courselist.drop_indexes()
@@ -27,14 +32,85 @@ def index():
         for course in output:
             del course[11]
         if len(output) >= 1:
-            return render_template('index.html', output=output)
+            return render_template('courses.html', output=output)
     courses = mongo.db.courselist
     output = [sorted(c.items()) for c in courses.find()]
-    return render_template('index.html', output=output)
+    return render_template('courses.html', output=output)
+
+
+@app.route('/semesters')
+def get_semesters():
+    search_query = request.args.get('search', None)
+    courses = mongo.db.courselist
+    all_semesters = ["fall2014", "spring2015", "fall2015", "spring2016", "fall2016", "spring2017", "current"]
+    if search_query is not None:
+        semesters = [semester for semester in all_semesters if search_query.replace("+", " ") in semester]
+        return render_template('semesters.html', output=semesters)
+    return render_template('semesters.html', output=all_semesters)
+
+
+@app.route('/semesters/<string:semester>')
+def get_deparments_by_semester(semester):
+    search_query = request.args.get('search', None)
+    courses = mongo.db.courselist
+    all_departments = sorted(set([course_dict["department"] for course_dict in courses.find({"season": semester})]))
+    if search_query is not None:
+        departments = [department for department in all_departments if search_query.replace("+", " ") in department]
+        return render_template('departments.html', output=departments)
+    return render_template('departments.html', output=all_departments)
+
+
+@app.route('/semesters/<string:semester>/<string:department>')
+def get_courses_by_department_by_semester(semester, department):
+    search_query = request.args.get('search', None)
+    if search_query is not None:
+        mongo.db.courselist.drop_indexes()
+        mongo.db.courselist.create_index([("$**", "text")], name="textScore")
+        cursor = mongo.db.courselist.find({'$text': {'$search': search_query.replace("+", " ")}},
+                                          {'score': {'$meta': 'textScore'}})
+        cursor.sort([('score', {'$meta': 'textScore'})])
+        output = list(sorted(dict(c).items()) for c in cursor if c["department"] == department and c["season"] == semester)
+        for course in output:
+            del course[11]
+        if len(output) >= 1:
+            return render_template('courses.html', output=output)
+    courses = mongo.db.courselist
+    output = [sorted(c.items()) for c in courses.find({"department": department}) if c["season"] == semester]
+    return render_template('courses.html', output=output)
+
+
+@app.route('/departments')
+def get_departments():
+    search_query = request.args.get('search', None)
+    courses = mongo.db.courselist
+    all_departments = sorted(set([course_dict["department"] for course_dict in courses.find()]))
+    if search_query is not None:
+        departments = [department for department in all_departments if search_query.replace("+", " ") in department]
+        return render_template('departments.html', output=departments)
+    return render_template('departments.html', output=all_departments)
+
+
+@app.route('/departments/<string:department>')
+def get_courses_by_department(department):
+    search_query = request.args.get('search', None)
+    if search_query is not None:
+        mongo.db.courselist.drop_indexes()
+        mongo.db.courselist.create_index([("$**", "text")], name="textScore")
+        cursor = mongo.db.courselist.find({'$text': {'$search': search_query.replace("+", " ")}},
+                                          {'score': {'$meta': 'textScore'}})
+        cursor.sort([('score', {'$meta': 'textScore'})])
+        output = list(sorted(dict(c).items()) for c in cursor if c["department"] == department)
+        for course in output:
+            del course[11]
+        if len(output) >= 1:
+            return render_template('courses.html', output=output)
+    courses = mongo.db.courselist
+    output = [sorted(c.items()) for c in courses.find({"department": department})]
+    return render_template('courses.html', output=output)
 
 
 @app.route('/api/courses', methods=['GET'])
-def get_all_courses():
+def api_get_all_courses():
     courses = mongo.db.courselist
     output = [{'course_code': c['course_code'],
                'course_registration_number': c['course_registration_number'],
@@ -52,7 +128,7 @@ def get_all_courses():
 
 
 @app.route('/api/department/<string:department>', methods=['GET'])
-def get_courses_by_department(department):
+def api_get_courses_by_department(department):
     courses = mongo.db.courselist
     courselist = courses.find({'department': department})
     output = [{'course_code': c['course_code'],
@@ -75,7 +151,7 @@ def get_courses_by_department(department):
 
 
 @app.route('/api/distribution/<string:distribution>', methods=['GET'])
-def get_courses_by_distribution(distribution):
+def api_get_courses_by_distribution(distribution):
     courses = mongo.db.courselist
     courselist = courses.find({'old_distributions': distribution})
     output = [{'course_code': c['course_code'],
@@ -98,7 +174,7 @@ def get_courses_by_distribution(distribution):
 
 
 @app.route('/api/semester/<string:season>', methods=['GET'])
-def get_semester_by_season(season):
+def api_get_courses_by_semester(season):
     courses = mongo.db.courselist
     courselist = courses.find({'season': season})
     output = [{'course_code': c['course_code'],
@@ -121,7 +197,7 @@ def get_semester_by_season(season):
 
 
 @app.route('/api/crn/<int:course_registration_number>', methods=['GET'])
-def get_courses_by_crn(course_registration_number):
+def api_get_courses_by_crn(course_registration_number):
     courses = mongo.db.courselist
     courselist = courses.find({'course_registration_number': course_registration_number})
     output = [{'course_code': c['course_code'],
@@ -144,7 +220,7 @@ def get_courses_by_crn(course_registration_number):
 
 
 @app.route('/api/course_code/<string:course_code>', methods=['GET'])
-def get_courses_by_code(course_code):
+def api_get_courses_by_code(course_code):
     courses = mongo.db.courselist
     courselist = courses.find({'course_code': course_code.replace("_", " ")})
     output = [{'course_code': c['course_code'],
@@ -167,7 +243,7 @@ def get_courses_by_code(course_code):
 
 
 @app.route('/api/professors/<string:professors>', methods=['GET'])
-def get_courses_by_professor(professors):
+def api_get_courses_by_professor(professors):
     courses = mongo.db.courselist
     courselist = courses.find({'professors': professors.replace("_", " ")})
     output = [{'course_code': c['course_code'],
@@ -190,7 +266,7 @@ def get_courses_by_professor(professors):
 
 
 @app.route('/api/locations/<string:location>', methods=['GET'])
-def get_courses_by_location(location):
+def api_get_courses_by_location(location):
     courses = mongo.db.courselist
     courselist = courses.find({'locations': location.replace("_", " ")})
     output = [{'course_code': c['course_code'],
@@ -213,4 +289,4 @@ def get_courses_by_location(location):
 
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(host='0.0.0.0', port=5555, debug=False)
