@@ -4,29 +4,10 @@
     <meta charset="UTF-8">
     <title>Fall 2014 through Fall 2017</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'style.css') }}">
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-    <style>
-        input[type=text] {
-            width: 130px;
-            box-sizing: border-box;
-            border: 2px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-            background-color: white;
-            background-image: url('{{ url_for('static', filename = 'searchicon.png') }}');
-            background-position: 10px 10px;
-            background-repeat: no-repeat;
-            padding: 12px 20px 12px 40px;
-            -webkit-transition: width 0.4s ease-in-out;
-            transition: width 0.4s ease-in-out;
-        }
-
-        input[type=text]:focus {
-            width: 100%;
-        }
-    </style>
 </head>
 <body>
 <div class="container-fluid">
@@ -43,25 +24,21 @@
     </div>
     <div class="row">
         <div class="col">
-            <table class="table table-bordered table-striped table-sm">
-                <thead class="thead-inverse">
+            <table class="rwd-table">
                 <tr>
                     <th>Department</th>
                 </tr>
-                </thead>
-                <tbody>
                 {% for item in output %}
                     {% if "/semesters/" in request.path %}
                     <tr>
-                        <th scope="row"><a href="{{ request.path + "/" + item }}">{{ item }}</a></th>
+                        <td data-th="Department"><a href="{{ request.path + "/" + item }}">{{ item }}</a></td>
                     </tr>
                     {% else %}
                     <tr>
-                        <th scope="row"><a href="{{ "/departments/" + item }}">{{ item }}</a></th>
+                        <td data-th="Department"><a href="{{ "/departments/" + item }}">{{ item }}</a></td>
                     </tr>
                     {% endif %}
                 {% endfor %}
-                </tbody>
             </table>
         </div>
     </div>
