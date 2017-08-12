@@ -2,6 +2,7 @@
 .rwd-table {
     margin: 1em 0;
     min-width: 300px;
+    max-width: 600px;
 }
 .rwd-table tr {
     border-top: 1px solid #ddd;
@@ -25,7 +26,7 @@
     width: 8em;
     display: inline-block;
 }
-@media (min-width: 480px) {
+@media (min-width: 1280px) {
     .rwd-table td:before {
         display: none;
     }
@@ -33,7 +34,7 @@
 .rwd-table th, .rwd-table td {
     text-align: left;
 }
-@media (min-width: 480px) {
+@media (min-width: 1280px) {
     .rwd-table th, .rwd-table td {
         display: table-cell;
         padding: .25em .5em;
@@ -67,7 +68,7 @@ body {
 .rwd-table th, .rwd-table td {
     margin: .5em 1em;
 }
-@media (min-width: 480px) {
+@media (min-width: 325px) {
     .rwd-table th, .rwd-table td {
         padding: 1em !important;
     }
@@ -78,7 +79,7 @@ body {
 }
 
 input[type=text] {
-    width: 130px;
+    width: 200px;
     box-sizing: border-box;
     border: 2px solid #ccc;
     border-radius: 4px;
@@ -93,7 +94,7 @@ input[type=text] {
 }
 
 input[type=text]:focus {
-    width: 100%;
+    width: 300px;
 }
 
 /* unvisited link */
