@@ -68,7 +68,7 @@ body {
 .rwd-table th, .rwd-table td {
     margin: .5em 1em;
 }
-@media (min-width: 325px) {
+@media (min-width: 1280px) {
     .rwd-table th, .rwd-table td {
         padding: 1em !important;
     }
