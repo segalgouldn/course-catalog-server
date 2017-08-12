@@ -24,22 +24,28 @@
     </div>
     <div class="row">
         <div class="col">
-            <table class="rwd-table">
-                <tr>
-                    <th>Department</th>
-                </tr>
-                {% for item in output %}
-                    {% if "/semesters/" in request.path %}
-                    <tr>
-                        <td data-th="Department"><a href="{{ request.path + "/" + item }}">{{ item }}</a></td>
-                    </tr>
-                    {% else %}
-                    <tr>
-                        <td data-th="Department"><a href="{{ "/departments/" + item }}">{{ item }}</a></td>
-                    </tr>
-                    {% endif %}
-                {% endfor %}
-            </table>
+            <div class="page">
+                <table class="layout display">
+                    <thead>
+                        <tr>
+                            <th>Department</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in output %}
+                        {% if "/semesters/" in request.path %}
+                        <tr>
+                            <td data-th="Department"><a href="{{ request.path + "/" + item }}">{{ item }}</a></td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td data-th="Department"><a href="{{ "/departments/" + item }}">{{ item }}</a></td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

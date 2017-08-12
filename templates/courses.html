@@ -28,39 +28,51 @@
     </div>
     <div class="row">
         <div class="col">
-            <table class="rwd-table">
-                <tr>
-                    <th>CRN</th>
-                    <th>Course Code</th>
-                    <th>New Distributions</th>
-                    <th>Old Distributions</th>
-                    <th>Department</th>
-                    <th>Semester</th>
-                    <th>Course Title</th>
-                    <th>Professors</th>
-                    <th>Locations</th>
-                    <th>Schedules</th>
-                    <th>URL</th>
-                </tr>
+            <div class="page">
                 {% for item in output %}
-                    <tr>
-                        <td data-th="CRN">{{ item[2][1] }}</td>
-                        <td data-th="Course Code">{{ item[1][1] }}</td>
-                        <td data-th="New Distributions">{{ item[7][1] }}</td>
-                        <td data-th="Old Distributions">{{ item[8][1] }}</td>
-                        <td data-th="Department">{{ item[4][1] }}</td>
-                        <td data-th="Semester">{{ item[11][1] }}</td>
-                        <td data-th="Course Title">{{ item[3][1] }}</td>
-                        <td data-th="Professors">{{ item[9][1] }}</td>
-                        <td data-th="Locations">{{ item[6][1] }}</td>
-                        <td data-th="Schedules">{{ item[10][1] }}</td>
-                        <td data-th="URL"><a href="{{ item[12][1] }}">{{ item[4][1] + " " + item[11][1] }}</a></td>
-                    </tr>
-                    <tr>
-                        <td data-th="Description" colspan="11">{{ item[5][1] }}</td>
-                    </tr>
+                    <table class="layout display responsive-table">
+                        <thead>
+                            <tr>
+                                <th>CRN</th>
+                                <th>Course Code</th>
+                                <th>New Distributions</th>
+                                <th>Old Distributions</th>
+                                <th>Department</th>
+                                <th>Semester</th>
+                                <th>Course Title</th>
+                                <th>Professors</th>
+                                <th>Locations</th>
+                                <th>Schedules</th>
+                                <th>URL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="CRN">{{ item[2][1] }}</td>
+                                <td class="Course Code">{{ item[1][1] }}</td>
+                                <td class="New Distributions">
+                                    {% if item[7][1] == "" %}
+                                        None
+                                    {% else %}
+                                        {{ item[7][1] }}
+                                    {% endif %}
+                                </td>
+                                <td class="Old Distributions">{{ item[8][1] }}</td>
+                                <td class="Department">{{ item[4][1] }}</td>
+                                <td class="Semester">{{ item[11][1] }}</td>
+                                <td class="Course Title">{{ item[3][1] }}</td>
+                                <td class="Professors">{{ item[9][1] }}</td>
+                                <td class="Locations">{{ item[6][1] }}</td>
+                                <td class="Schedules">{{ item[10][1] }}</td>
+                                <td class="URL"><a href="{{ item[12][1] }}">{{ item[4][1] + " " + item[11][1] }}</a></td>
+                            </tr>
+                            <tr>
+                                <td class="Description" colspan="11">{{ item[5][1] }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 {% endfor %}
-            </table>
+            </div>
         </div>
     </div>
 </div>

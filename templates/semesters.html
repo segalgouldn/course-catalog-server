@@ -24,16 +24,22 @@
     </div>
     <div class="row">
         <div class="col">
-            <table class="rwd-table">
-                <tr>
-                    <th>Semester</th>
-                </tr>
-                {% for item in output %}
-                    <tr>
-                        <td data-th="Semester"><a href="{{ "/semesters/" + item }}">{{ item }}</a></td>
-                    </tr>
-                {% endfor %}
-            </table>
+            <div class="page">
+                <table class="layout display">
+                    <thead>
+                        <tr>
+                            <th>Semester</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in output %}
+                        <tr>
+                            <td data-th="Semester"><a href="{{ "/semesters/" + item }}">{{ item }}</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
