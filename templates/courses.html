@@ -12,7 +12,13 @@
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div class="col">
+        <button onclick="window.location='/';">Home</button>
+        <p>&nbsp</p>
+        <button onclick="history.back();">Previous</button>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col box">
             {% if "/all" in request.path %}
                 <h3>All Courses</h3>
             {% elif "/crn/" in request.path %}
@@ -30,10 +36,6 @@
             <small><p>As a part of my Senior Project, this site is still a work-in-progress. I am not liable for any mistakes you may encounter during its use.</p></small>
             <form>
                 <input type="text" name="search" placeholder="Search...">
-            </form>
-            <br>
-            <form>
-                <input type="button" value="Previous" onclick="history.back()"></input>
             </form>
         </div>
     </div>

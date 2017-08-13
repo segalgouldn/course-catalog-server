@@ -12,16 +12,18 @@
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div class="col">
+        <button onclick="window.location='/';">Home</button>
+        <p>&nbsp</p>
+        <button onclick="history.back();">Previous</button>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col box">
             <h3>Departments List</h3>
-            <p>This course catalog features <b>{{ output|length }}</b> departments <a href="https://github.com/segalgouldn/sproj-course-catalog-parser">web-scraped</a> from Bard College's Course Catalog.</p>
+            <p>This course catalog features <b>{{ output|length }}</b> course(s) <a href="https://github.com/segalgouldn/sproj-course-catalog-parser">web-scraped</a> from Bard College's Course Catalog and <a href="https://github.com/segalgouldn/sproj-course-catalog-server">served</a> to you.</p>
             <small><p>As a part of my Senior Project, this site is still a work-in-progress. I am not liable for any mistakes you may encounter during its use.</p></small>
             <form>
                 <input type="text" name="search" placeholder="Search...">
-            </form>
-            <br>
-            <form>
-                <input type="button" value="Previous" onclick="history.back()"></input>
             </form>
         </div>
     </div>
