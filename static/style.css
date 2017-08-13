@@ -65,7 +65,7 @@ table.responsive-table{
     }
 
     table.responsive-table td:nth-child(1):before{
-        content: 'CRN/Description:';
+        content: 'CRN:';
     }
     table.responsive-table td:nth-child(2):before{
         content: 'Course Code:';

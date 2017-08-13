@@ -79,11 +79,20 @@
                                 <td class="Schedules">{{ item[10][1] }}</td>
                                 <td class="URL"><a href="{{ item[12][1] }}">{{ item[4][1] + " " + item[11][1] }}</a></td>
                             </tr>
-                            <tr>
-                                <td class="Description" colspan="11"><b>{{ item[2][1] }}</b>: {{ item[5][1] }}</td>
-                            </tr>
                         </tbody>
                     </table>
+                    <table class="layout display">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="Description">{{ item[5][1] }}</td>
+                        </tr>
+                    </tbody>
+                </table>
                 {% endfor %}
             </div>
         </div>

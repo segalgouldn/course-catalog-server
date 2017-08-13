@@ -40,11 +40,11 @@
                     {% for item in output %}
                         {% if "/semesters/" in request.path %}
                         <tr>
-                            <td data-th="Department"><a href="{{ request.path + "/" + item }}">{{ item }}</a></td>
+                            <td><a href="{{ request.path + "/" + item }}">{{ item }}</a></td>
                         </tr>
                         {% else %}
                         <tr>
-                            <td data-th="Department"><a href="{{ "/departments/" + item }}">{{ item }}</a></td>
+                            <td><a href="{{ "/departments/" + item }}">{{ item }}</a></td>
                         </tr>
                         {% endif %}
                     {% endfor %}
