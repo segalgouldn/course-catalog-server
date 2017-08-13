@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Fall 2014 through Fall 2017</title>
+    <title>courses.segal-gould.com</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'style.css') }}">
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
@@ -39,60 +40,92 @@
             </form>
         </div>
     </div>
+    <br>
+    <div class="row">
+        <div class="col box">
+            <div class="row justify-content-center">
+                <p>Sort by:</p>
+            </div>
+            <div class="row justify-content-center">
+                <button onclick="window.location='?sort=course_registration_number';">CRN</button>
+                <button onclick="window.location='?sort=course_code';">Course Code</button>
+                <button onclick="window.location='?sort=new_distributions';">New Distributions</button>
+                <button onclick="window.location='?sort=old_distributions';">Old Distributions</button>
+                <button onclick="window.location='?sort=department';">Department</button>
+                <button onclick="window.location='?sort=semester';">Semester</button>
+                <button onclick="window.location='?sort=course_title';">Course Title</button>
+                <button onclick="window.location='?sort=professors';">Professors</button>
+                <button onclick="window.location='?sort=locations';">Locations</button>
+                <button onclick="window.location='?sort=schedules';">Schedules</button>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col">
             <div class="page">
                 {% for item in output %}
                     <table class="layout display responsive-table">
                         <thead>
-                            <tr>
-                                <th>CRN</th>
-                                <th>Course Code</th>
-                                <th>New Distributions</th>
-                                <th>Old Distributions</th>
-                                <th>Department</th>
-                                <th>Semester</th>
-                                <th>Course Title</th>
-                                <th>Professors</th>
-                                <th>Locations</th>
-                                <th>Schedules</th>
-                                <th>URL</th>
-                            </tr>
+                        <tr>
+                            <th>CRN</th>
+                            <th>Course Code</th>
+                            <th>New Distributions</th>
+                            <th>Old Distributions</th>
+                            <th>Department</th>
+                            <th>Semester</th>
+                            <th>Course Title</th>
+                            <th>Professors</th>
+                            <th>Locations</th>
+                            <th>Schedules</th>
+                            <th>URL</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="CRN"><a href="/crn/{{ item[2][1] }}">{{ item[2][1] }}</a></td>
-                                <td class="Course Code"><a href="/course_code/{{ item[1][1]|replace(" ", "_") }}">{{ item[1][1] }}</a></td>
-                                <td class="New Distributions">
-                                    {% if item[7][1] == "" %}
-                                        None
-                                    {% else %}
-                                        {{ item[7][1] }}
-                                    {% endif %}
-                                </td>
-                                <td class="Old Distributions">{{ item[8][1] }}</td>
-                                <td class="Department"><a href="/departments/{{ item[4][1] }}">{{ item[4][1] }}</a></td>
-                                <td class="Semester"><a href="/semesters/{{ item[11][1] }}">{{ item[11][1] }}</a></td>
-                                <td class="Course Title">{{ item[3][1] }}</td>
-                                <td class="Professors"><a href="/professors/{{ item[9][1]|replace(" ", "_") }}">{{ item[9][1] }}</a></td>
-                                <td class="Locations"><a href="/locations/{{ item[6][1]|replace(" ", "_") }}">{{ item[6][1] }}</a></td>
-                                <td class="Schedules">{{ item[10][1] }}</td>
-                                <td class="URL"><a href="{{ item[12][1] }}">{{ item[4][1] + " " + item[11][1] }}</a></td>
-                            </tr>
+                        <tr>
+                            <td class="CRN"><a href="/crn/{{ item[2][1] }}">{{ item[2][1] }}</a></td>
+                            <td class="Course Code"><a href="/course_code/{{ item[1][1]|replace(" ", "_") }}">{{ item[1][1] }}</a></td>
+                            <td class="New Distributions">
+                                {% if item[7][1] == "" %}
+                                    None
+                                {% else %}
+                                    {{ item[7][1] }}
+                                {% endif %}
+                            </td>
+                            <td class="Old Distributions">
+                                {% if item[8][1] == "" %}
+                                    None
+                                {% else %}
+                                    {{ item[8][1] }}
+                                {% endif %}
+                            </td>
+                            <td class="Department"><a href="/departments/{{ item[4][1] }}">{{ item[4][1] }}</a></td>
+                            <td class="Semester"><a href="/semesters/{{ item[11][1] }}">{{ item[11][1] }}</a></td>
+                            <td class="Course Title">{{ item[3][1] }}</td>
+                            <td class="Professors">
+                                {% if item[9][1] == "" %}
+                                    None
+                                {% else %}
+                                    <a href="/professors/{{ item[9][1]|replace(" ", "_") }}">{{ item[9][1] }}</a>
+                                {% endif %}
+                            </td>
+                            <td class="Locations"><a href="/locations/{{ item[6][1]|replace(" ", "_") }}">{{ item[6][1] }}</a></td>
+                            <td class="Schedules">{{ item[10][1] }}</td>
+                            <td class="URL"><a href="{{ item[12][1] }}">{{ item[4][1] + " " + item[11][1] }}</a></td>
+                        </tr>
                         </tbody>
                     </table>
                     <table class="layout display">
-                    <thead>
+                        <thead>
                         <tr>
                             <th>Description</th>
                         </tr>
-                    </thead>
-                    <tbody>
+                        </thead>
+                        <tbody>
                         <tr>
                             <td class="Description">{{ item[5][1] }}</td>
                         </tr>
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
                 {% endfor %}
             </div>
         </div>
