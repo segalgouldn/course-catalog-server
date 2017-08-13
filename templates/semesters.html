@@ -13,13 +13,16 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col">
-            <h3>Semesters List</b></h3>
+            <h3>Semesters List</h3>
             <p>This course catalog features <b>{{ output|length }}</b> semesters <a href="https://github.com/segalgouldn/sproj-course-catalog-parser">web-scraped</a> from Bard College's Course Catalog.</p>
             <small><p>As a part of my Senior Project, this site is still a work-in-progress. I am not liable for any mistakes you may encounter during its use.</p></small>
             <form>
                 <input type="text" name="search" placeholder="Search...">
             </form>
             <br>
+            <form>
+                <input type="button" value="Previous" onclick="history.back()"></input>
+            </form>
         </div>
     </div>
     <div class="row">

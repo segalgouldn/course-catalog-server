@@ -15,15 +15,26 @@
         <div class="col">
             {% if "/all" in request.path %}
                 <h3>All Courses</h3>
+            {% elif "/crn/" in request.path %}
+                <h3>All courses with Course Registration Number "{{ output[0][2][1] }}"</h3>
+            {% elif "/course_code/" in request.path %}
+                <h3>All courses with Course Code "{{ output[0][1][1] }}"</h3>
+            {% elif "/professors/" in request.path %}
+                <h3>All courses taught by professor(s) with name(s) "{{ output[0][9][1] }}"</h3>
+            {% elif "/locations/" in request.path %}
+                <h3>All courses taught in location known as "{{ output[0][6][1] }}"</h3>
             {% else %}
                 <h3>{{ output[0][4][1] }} courses</h3>
             {% endif %}
-            <p>This course catalog features <b>{{ output|length }}</b> courses <a href="https://github.com/segalgouldn/sproj-course-catalog-parser">web-scraped</a> from Bard College's Course Catalog.</p>
+            <p>This course catalog features <b>{{ output|length }}</b> course(s) <a href="https://github.com/segalgouldn/sproj-course-catalog-parser">web-scraped</a> from Bard College's Course Catalog and <a href="https://github.com/segalgouldn/sproj-course-catalog-server">served</a> to you.</p>
             <small><p>As a part of my Senior Project, this site is still a work-in-progress. I am not liable for any mistakes you may encounter during its use.</p></small>
             <form>
                 <input type="text" name="search" placeholder="Search...">
             </form>
             <br>
+            <form>
+                <input type="button" value="Previous" onclick="history.back()"></input>
+            </form>
         </div>
     </div>
     <div class="row">
@@ -48,8 +59,8 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="CRN">{{ item[2][1] }}</td>
-                                <td class="Course Code">{{ item[1][1] }}</td>
+                                <td class="CRN"><a href="/crn/{{ item[2][1] }}">{{ item[2][1] }}</a></td>
+                                <td class="Course Code"><a href="/course_code/{{ item[1][1]|replace(" ", "_") }}">{{ item[1][1] }}</a></td>
                                 <td class="New Distributions">
                                     {% if item[7][1] == "" %}
                                         None
@@ -58,16 +69,16 @@
                                     {% endif %}
                                 </td>
                                 <td class="Old Distributions">{{ item[8][1] }}</td>
-                                <td class="Department">{{ item[4][1] }}</td>
-                                <td class="Semester">{{ item[11][1] }}</td>
+                                <td class="Department"><a href="/departments/{{ item[4][1] }}">{{ item[4][1] }}</a></td>
+                                <td class="Semester"><a href="/semesters/{{ item[11][1] }}">{{ item[11][1] }}</a></td>
                                 <td class="Course Title">{{ item[3][1] }}</td>
-                                <td class="Professors">{{ item[9][1] }}</td>
-                                <td class="Locations">{{ item[6][1] }}</td>
+                                <td class="Professors"><a href="/professors/{{ item[9][1]|replace(" ", "_") }}">{{ item[9][1] }}</a></td>
+                                <td class="Locations"><a href="/locations/{{ item[6][1]|replace(" ", "_") }}">{{ item[6][1] }}</a></td>
                                 <td class="Schedules">{{ item[10][1] }}</td>
                                 <td class="URL"><a href="{{ item[12][1] }}">{{ item[4][1] + " " + item[11][1] }}</a></td>
                             </tr>
                             <tr>
-                                <td class="Description" colspan="11">{{ item[5][1] }}</td>
+                                <td class="Description" colspan="11"><b>{{ item[2][1] }}</b>: {{ item[5][1] }}</td>
                             </tr>
                         </tbody>
                     </table>

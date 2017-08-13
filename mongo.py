@@ -20,6 +20,82 @@ def index():
     return render_template('home.html')
 
 
+@app.route('/crn/<int:course_registration_number>')
+def get_courses_by_crn(course_registration_number):
+    search_query = request.args.get('search', None)
+    if search_query is not None:
+        mongo.db.courselist.drop_indexes()
+        mongo.db.courselist.create_index([("$**", "text")], name="textScore")
+        cursor = mongo.db.courselist.find({'$text': {'$search': search_query.replace("+", " ")}},
+                                          {'score': {'$meta': 'textScore'}})
+        cursor.sort([('score', {'$meta': 'textScore'})])
+        output = list(sorted(dict(c).items()) for c in cursor)
+        for course in output:
+            del course[11]
+        if len(output) >= 1:
+            return render_template('courses.html', output=output)
+    courses = mongo.db.courselist
+    output = [sorted(c.items()) for c in courses.find({"course_registration_number": course_registration_number})]
+    return render_template('courses.html', output=output)
+
+
+@app.route('/course_code/<string:course_code>')
+def get_courses_by_code(course_code):
+    search_query = request.args.get('search', None)
+    if search_query is not None:
+        mongo.db.courselist.drop_indexes()
+        mongo.db.courselist.create_index([("$**", "text")], name="textScore")
+        cursor = mongo.db.courselist.find({'$text': {'$search': search_query.replace("+", " ")}},
+                                          {'score': {'$meta': 'textScore'}})
+        cursor.sort([('score', {'$meta': 'textScore'})])
+        output = list(sorted(dict(c).items()) for c in cursor)
+        for course in output:
+            del course[11]
+        if len(output) >= 1:
+            return render_template('courses.html', output=output)
+    courses = mongo.db.courselist
+    output = [sorted(c.items()) for c in courses.find({"course_code": course_code.replace("_", " ")})]
+    return render_template('courses.html', output=output)
+
+
+@app.route('/professors/<string:professors>')
+def get_courses_by_professor(professors):
+    search_query = request.args.get('search', None)
+    if search_query is not None:
+        mongo.db.courselist.drop_indexes()
+        mongo.db.courselist.create_index([("$**", "text")], name="textScore")
+        cursor = mongo.db.courselist.find({'$text': {'$search': search_query.replace("+", " ")}},
+                                          {'score': {'$meta': 'textScore'}})
+        cursor.sort([('score', {'$meta': 'textScore'})])
+        output = list(sorted(dict(c).items()) for c in cursor)
+        for course in output:
+            del course[11]
+        if len(output) >= 1:
+            return render_template('courses.html', output=output)
+    courses = mongo.db.courselist
+    output = [sorted(c.items()) for c in courses.find({"professors": professors.replace("_", " ")})]
+    return render_template('courses.html', output=output)
+
+
+@app.route('/locations/<string:locations>')
+def get_courses_by_location(locations):
+    search_query = request.args.get('search', None)
+    if search_query is not None:
+        mongo.db.courselist.drop_indexes()
+        mongo.db.courselist.create_index([("$**", "text")], name="textScore")
+        cursor = mongo.db.courselist.find({'$text': {'$search': search_query.replace("+", " ")}},
+                                          {'score': {'$meta': 'textScore'}})
+        cursor.sort([('score', {'$meta': 'textScore'})])
+        output = list(sorted(dict(c).items()) for c in cursor)
+        for course in output:
+            del course[11]
+        if len(output) >= 1:
+            return render_template('courses.html', output=output)
+    courses = mongo.db.courselist
+    output = [sorted(c.items()) for c in courses.find({"locations": locations.replace("_", " ")})]
+    return render_template('courses.html', output=output)
+
+
 @app.route('/all')
 def get_all_courses():
     search_query = request.args.get('search', None)

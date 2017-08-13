@@ -20,6 +20,12 @@ a:hover {
     max-width: 80em;
     margin: 0 auto;
 }
+.home{
+    padding: 1em;
+    background: #ddd;
+    max-width: 80em;
+    margin: 0 auto;
+}
 table th,
 table td{
     text-align: left;
@@ -44,7 +50,7 @@ table.responsive-table{
     box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
 }
 
-@media (max-width: 50em){
+@media (max-width: 80em){
     table.responsive-table{
         box-shadow: none;
     }
@@ -57,37 +63,37 @@ table.responsive-table{
     }
 
     table.responsive-table td:nth-child(1):before{
-        content: 'CRN/Description';
+        content: 'CRN/Description:';
     }
     table.responsive-table td:nth-child(2):before{
-        content: 'Course Code';
+        content: 'Course Code:';
     }
     table.responsive-table td:nth-child(3):before{
-        content: 'New Distributions';
+        content: 'New Distributions:';
     }
     table.responsive-table td:nth-child(4):before{
-        content: 'Old Distributions';
+        content: 'Old Distributions:';
     }
     table.responsive-table td:nth-child(5):before{
-        content: 'Department';
+        content: 'Department:';
     }
     table.responsive-table td:nth-child(6):before{
-        content: 'Semester';
+        content: 'Semester:';
     }
     table.responsive-table td:nth-child(7):before{
-        content: 'Course Title';
+        content: 'Course Title:';
     }
     table.responsive-table td:nth-child(8):before{
-        content: 'Professors';
+        content: 'Professors:';
     }
     table.responsive-table td:nth-child(9):before{
-        content: 'Locations';
+        content: 'Locations:';
     }
     table.responsive-table td:nth-child(10):before{
-        content: 'Schedules';
+        content: 'Schedules:';
     }
     table.responsive-table td:nth-child(11):before{
-        content: 'URL';
+        content: 'URL:';
     }
     table.responsive-table td:nth-child(1),
     table.responsive-table td:nth-child(2),
