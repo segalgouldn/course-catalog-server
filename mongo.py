@@ -1,10 +1,9 @@
 # Noah Segal-Gould, Summer 2017
 
-from flask import Flask
-from flask import jsonify
-from flask import render_template
-from flask import request
+from flask import url_for, session, redirect, request, render_template, jsonify, Flask
 from flask_pymongo import PyMongo
+
+import bcrypt
 
 
 app = Flask(__name__)
@@ -15,9 +14,141 @@ app.config['MONGO_URI'] = 'mongodb://localhost:27017/courselist'
 mongo = PyMongo(app)
 
 
+@app.route('/user/<path:username>')
+def get_courses_for_user(username):
+    users = mongo.db.users
+    login_user = users.find_one({'name': username})
+    if login_user:
+        courses = login_user.get("courses", None)
+        if courses:
+            search_query = request.args.get('search', None)
+            if search_query is not None:
+                mongo.db.courselist.drop_indexes()
+                mongo.db.courselist.create_index([("$**", "text")], name="textScore")
+                cursor = mongo.db.courselist.find({'$text': {'$search': search_query.replace("+", " ")}}, {'score': {'$meta': 'textScore'}})
+                cursor.sort([('score', {'$meta': 'textScore'})])
+                output = list(sorted(dict(c).items()) for c in cursor)
+                for course in output:
+                    del course[11]
+                if len(output) >= 1:
+                    return render_template('courses.html', output=output, username=username)
+            sorted_query = request.args.get('sort', None)
+            if sorted_query is not None:
+                if sorted_query == "course_registration_number":
+                    output = sorted([sorted(c.items()) for c in courses], key=lambda k: k[2][1])
+                    return render_template('courses.html', output=output, username=username)
+                elif sorted_query == "course_code":
+                    output = sorted([sorted(c.items()) for c in courses], key=lambda k: k[1][1])
+                    return render_template('courses.html', output=output, username=username)
+                elif sorted_query == "new_distributions":
+                    output = sorted([sorted(c.items()) for c in courses], key=lambda k: k[7][1])
+                    return render_template('courses.html', output=output, username=username)
+                elif sorted_query == "old_distributions":
+                    output = sorted([sorted(c.items()) for c in courses], key=lambda k: k[8][1])
+                    return render_template('courses.html', output=output, username=username)
+                elif sorted_query == "department":
+                    output = sorted([sorted(c.items()) for c in courses], key=lambda k: k[4][1])
+                    return render_template('courses.html', output=output, username=username)
+                elif sorted_query == "semester":
+                    output = sorted([sorted(c.items()) for c in courses], key=lambda k: k[11][1])
+                    return render_template('courses.html', output=output, username=username)
+                elif sorted_query == "course_title":
+                    output = sorted([sorted(c.items()) for c in courses], key=lambda k: k[3][1])
+                    return render_template('courses.html', output=output, username=username)
+                elif sorted_query == "professors":
+                    output = sorted([sorted(c.items()) for c in courses], key=lambda k: k[9][1])
+                    return render_template('courses.html', output=output, username=username)
+                elif sorted_query == "locations":
+                    output = sorted([sorted(c.items()) for c in courses], key=lambda k: k[6][1])
+                    return render_template('courses.html', output=output, username=username)
+                elif sorted_query == "schedules":
+                    output = sorted([sorted(c.items()) for c in courses], key=lambda k: k[10][1])
+                    return render_template('courses.html', output=output, username=username)
+                else:
+                    output = [sorted(c.items()) for c in courses]
+                    return render_template('courses.html', output=output, username=username)
+            output = [sorted(c.items()) for c in courses]
+            return render_template('courses.html', output=output, username=username)
+        if 'username' in session:
+            return render_template('error.html', error="You haven\'t added any courses yet.", username=session['username'])
+        return render_template('error.html', error="That user hasn\'t added any courses yet.")
+    return render_template('error.html', error="There does not exist a user with that name.")
+
+
+@app.route('/add_course/<ObjectId:course_id>')
+def add_course_to_user_by_id(course_id):
+    if 'username' in session:
+        users = mongo.db.users
+        courses = mongo.db.courselist
+        login_user = users.find_one({'name': session['username']})
+        specific_course = courses.find_one({'_id': course_id})
+        if specific_course:
+            if specific_course not in login_user["courses"]:
+                users.update({"_id": login_user["_id"]}, {'$push': {'courses': specific_course}})
+                return redirect(url_for('get_courses_for_user', username=session['username']))
+            return render_template('error.html', error="That course is already in your favorites.", username=session['username'])
+        return render_template('error.html', error="A course with that ID does not exist.", username=session['username'])
+    return render_template('error.html', error="Please log in to add courses to your favorites.")
+
+
+@app.route('/remove_course/<ObjectId:course_id>')
+def remove_course_from_user_by_id(course_id):
+    if 'username' in session:
+        users = mongo.db.users
+        courses = mongo.db.courselist
+        login_user = users.find_one({'name': session['username']})
+        specific_course = courses.find_one({'_id': course_id})
+        if specific_course:
+            if specific_course in login_user["courses"]:
+                users.update({"_id": login_user["_id"]}, {'$pull': {'courses': specific_course}})
+                return redirect(url_for('get_courses_for_user', username=session['username']))
+            return render_template('error.html', error="That course is not already in your favorites.", username=session['username'])
+        return render_template('error.html', error="A course with that ID does not exist.", username=session['username'])
+    return render_template('error.html', error="Please log in to add courses to your favorites.")
+
+
 @app.route('/')
 def index():
+    if 'username' in session:
+        return render_template('home.html', username=session['username'])
+
     return render_template('home.html')
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    users = mongo.db.users
+    login_user = users.find_one({'name': request.form['username']})
+
+    if login_user:
+        if bcrypt.hashpw(request.form['pass'].encode('utf-8'), login_user['password']) == login_user['password']:
+            session['username'] = request.form['username']
+            return redirect(url_for('index'))
+
+    return render_template("error.html", error='Invalid username/password combination.')
+
+
+@app.route('/logoff')
+def logoff():
+    session.clear()
+    return redirect(url_for('index'))
+
+
+@app.route('/register', methods=['POST', 'GET'])
+def register():
+    if request.method == 'POST':
+        users = mongo.db.users
+        existing_user = users.find_one({'name': request.form['username']})
+
+        if existing_user is None:
+            hashpass = bcrypt.hashpw(request.form['pass'].encode('utf-8'), bcrypt.gensalt())
+            users.insert({'name': request.form['username'], 'password': hashpass, 'courses': []})
+            session['username'] = request.form['username']
+            return redirect(url_for('index'))
+
+        return render_template("error.html", error='That username already exists.')
+
+    return render_template('register.html')
 
 
 @app.route('/crn/<int:course_registration_number>')
@@ -726,4 +857,5 @@ def api_get_courses_by_location(location):
 
 
 if __name__ == '__main__':
+    app.secret_key = 'thisisatest'
     app.run(host='0.0.0.0', port=5555, debug=False)

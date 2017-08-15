@@ -13,9 +13,9 @@
 <body>
 <div class="container-fluid">
     <div class="row">
-        <button onclick="window.location='/';">Home</button>
+        <button onclick="window.location='/';" class="btn btn-primary btn-danger">Home</button>
         <p>&nbsp</p>
-        <button onclick="history.back();">Previous</button>
+        <button onclick="history.back();" class="btn btn-primary btn-danger">Previous</button>
     </div>
     <br>
     <div class="row">
@@ -24,7 +24,7 @@
             <p>This course catalog features <b>{{ output|length }}</b> course(s) <a href="https://github.com/segalgouldn/sproj-course-catalog-parser">web-scraped</a> from Bard College's Course Catalog and <a href="https://github.com/segalgouldn/sproj-course-catalog-server">served</a> to you.</p>
             <small><p>As a part of my Senior Project, this site is still a work-in-progress. I am not liable for any mistakes you may encounter during its use.</p></small>
             <form>
-                <input type="text" name="search" placeholder="Search...">
+                <input type="text" class="search" name="search" placeholder="Search...">
             </form>
         </div>
     </div>

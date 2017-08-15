@@ -13,9 +13,9 @@
 <body>
 <div class="container-fluid">
     <div class="row">
-        <button onclick="window.location='/';">Home</button>
+        <button onclick="window.location='/';" class="btn btn-primary btn-danger">Home</button>
         <p>&nbsp</p>
-        <button onclick="history.back();">Previous</button>
+        <button onclick="history.back();" class="btn btn-primary btn-danger">Previous</button>
     </div>
     <br>
     <div class="row">
@@ -30,13 +30,15 @@
                 <h3>All courses taught by professor(s) with name(s) "{{ output[0][9][1] }}"</h3>
             {% elif "/locations/" in request.path %}
                 <h3>All courses taught in location known as "{{ output[0][6][1] }}"</h3>
+            {% elif "/user/" in request.path %}
+                <h3>Favorite courses for user "<a href="/user/{{ username|urlencode }}">{{ username }}</a>"</h3>
             {% else %}
                 <h3>{{ output[0][4][1] }} courses</h3>
             {% endif %}
             <p>This course catalog features <b>{{ output|length }}</b> course(s) <a href="https://github.com/segalgouldn/sproj-course-catalog-parser">web-scraped</a> from Bard College's Course Catalog and <a href="https://github.com/segalgouldn/sproj-course-catalog-server">served</a> to you.</p>
             <small><p>As a part of my Senior Project, this site is still a work-in-progress. I am not liable for any mistakes you may encounter during its use.</p></small>
             <form>
-                <input type="text" name="search" placeholder="Search...">
+                <input type="text" class="search" name="search" placeholder="Search...">
             </form>
         </div>
     </div>
@@ -47,16 +49,25 @@
                 <p>Sort by:</p>
             </div>
             <div class="row justify-content-center">
-                <button onclick="window.location='?sort=course_registration_number';">CRN</button>
-                <button onclick="window.location='?sort=course_code';">Course Code</button>
-                <button onclick="window.location='?sort=new_distributions';">New Distributions</button>
-                <button onclick="window.location='?sort=old_distributions';">Old Distributions</button>
-                <button onclick="window.location='?sort=department';">Department</button>
-                <button onclick="window.location='?sort=semester';">Semester</button>
-                <button onclick="window.location='?sort=course_title';">Course Title</button>
-                <button onclick="window.location='?sort=professors';">Professors</button>
-                <button onclick="window.location='?sort=locations';">Locations</button>
-                <button onclick="window.location='?sort=schedules';">Schedules</button>
+                <button onclick="window.location='?sort=course_registration_number';" class="btn btn-primary btn-danger">CRN</button>
+                <p>&nbsp</p>
+                <button onclick="window.location='?sort=course_code';" class="btn btn-primary btn-danger">Course Code</button>
+                <p>&nbsp</p>
+                <button onclick="window.location='?sort=new_distributions';" class="btn btn-primary btn-danger">New Distributions</button>
+                <p>&nbsp</p>
+                <button onclick="window.location='?sort=old_distributions';" class="btn btn-primary btn-danger">Old Distributions</button>
+                <p>&nbsp</p>
+                <button onclick="window.location='?sort=department';" class="btn btn-primary btn-danger">Department</button>
+                <p>&nbsp</p>
+                <button onclick="window.location='?sort=semester';" class="btn btn-primary btn-danger">Semester</button>
+                <p>&nbsp</p>
+                <button onclick="window.location='?sort=course_title';" class="btn btn-primary btn-danger">Course Title</button>
+                <p>&nbsp</p>
+                <button onclick="window.location='?sort=professors';" class="btn btn-primary btn-danger">Professors</button>
+                <p>&nbsp</p>
+                <button onclick="window.location='?sort=locations';" class="btn btn-primary btn-danger">Locations</button>
+                <p>&nbsp</p>
+                <button onclick="window.location='?sort=schedules';" class="btn btn-primary btn-danger">Schedules</button>
             </div>
         </div>
     </div>
@@ -122,7 +133,21 @@
                         </thead>
                         <tbody>
                         <tr>
-                            <td class="Description">{{ item[5][1] }}</td>
+                            <td class="Description">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <p>{{ item[5][1] }}</p>
+                                    </div>
+                                    <div class="row">
+                                        <p><b>Add or remove from favorites:</b></p>
+                                    </div>
+                                    <div class="row">
+                                        <button onclick="window.location='/add_course/{{ item[0][1] }}';" class="btn btn-primary btn-danger">Add</button>
+                                        <p>&nbsp</p>
+                                        <button onclick="window.location='/remove_course/{{ item[0][1] }}';" class="btn btn-primary btn-danger">Remove</button>
+                                    </div>
+                                </div>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

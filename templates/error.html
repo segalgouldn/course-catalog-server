@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>courses.segal-gould.com</title>
+    <title>Error</title>
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'style.css') }}">
@@ -11,6 +11,14 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 </head>
 <body>
+<div class="container-fluid">
+    <div class="row">
+        <button onclick="window.location='/';" class="btn btn-primary btn-danger">Home</button>
+        <p>&nbsp</p>
+        <button onclick="history.back();" class="btn btn-primary btn-danger">Previous</button>
+    </div>
+</div>
+<br>
 {% if username %}
     <div class="container">
         <div class="row">
@@ -52,25 +60,10 @@
     <div class="row">
         <div class="box">
             <div class="col">
-                <h2>Welcome to <b>courses.segal-gould.com</b></h2>
-                <p>This course catalog features courses <a href="https://github.com/segalgouldn/sproj-course-catalog-parser">web-scraped</a> from Bard College's Course Catalog and <a href="https://github.com/segalgouldn/sproj-course-catalog-server">served</a> to you.</p>
-                <p>It is by no means exhaustive.</p>
-                <p>To browse, visit:</p>
-                <p><a href="/semesters"> <b>courses.segal-gould.com/semesters </b></a>for courses by semester.</p>
-                <p><a href="/departments"> <b>courses.segal-gould.com/departments </b></a>for courses by department.</p>
-                <p><a href="/all"> <b>courses.segal-gould.com/all </b></a>for <em><b>all</b></em> the courses in the database.</p>
-                <p>If you would like to use the API (Application Programming Interface), here are some example URLs:</p>
-                <small>
-                    <p><a href="/api/courses"><code>courses.segal-gould.com/api/courses</code></a></p>
-                    <p><a href="/api/department/computer"><code>courses.segal-gould.com/api/department/computer</code></a></p>
-                    <p><a href="/api/distribution/MATC"><code>courses.segal-gould.com/api/distribution/MATC</code></a></p>
-                    <p><a href="/api/semester/fall2014"><code>courses.segal-gould.com/api/semester/fall2014</code></a></p>
-                    <p><a href="/api/crn/16071"><code>courses.segal-gould.com/api/crn/16071</code></a></p>
-                    <p><a href="/api/course_code/CMSC_143"><code>courses.segal-gould.com/api/course_code/CMSC_143</code></a></p>
-                    <p><a href="/api/professors/Keith_O'Hara"><code>courses.segal-gould.com/api/professors/Keith_O'Hara</code></a></p>
-                    <p><a href="/api/locations/RKC_100"><code>courses.segal-gould.com/api/locations/RKC_100</code></a></p>
-                </small>
-                <small><p>As a part of my Senior Project, this site is still a work-in-progress. I am not liable for any mistakes you may encounter during its use.</p></small>
+                {% if error %}
+                    <h2>Error:</h2>
+                    <p>{{ error }}</p>
+                {% endif %}
             </div>
         </div>
     </div>
