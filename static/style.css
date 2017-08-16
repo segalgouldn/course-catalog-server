@@ -108,7 +108,7 @@ table.responsive-table{
     table.responsive-table td:nth-child(9),
     table.responsive-table td:nth-child(10),
     table.responsive-table td:nth-child(11){
-        padding-left: 50%;
+        padding-left: 170px;
     }
     table.responsive-table td:nth-child(1):before,
     table.responsive-table td:nth-child(2):before,
@@ -145,23 +145,4 @@ table.responsive-table{
         border: none;
         background: none;
     }
-}
-
-input[type=text].search {
-    width: 150px;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    background-color: white;
-    background-image: url("/static/searchicon.png");
-    background-position: 10px 10px;
-    background-repeat: no-repeat;
-    padding: 12px 20px 12px 40px;
-    -webkit-transition: width 0.4s ease-in-out;
-    transition: width 0.4s ease-in-out;
-}
-
-input[type=text]:focus.search {
-    width: 300px;
 }

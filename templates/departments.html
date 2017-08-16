@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <title>courses.segal-gould.com</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
@@ -11,7 +12,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 </head>
 <body>
-<div class="container-fluid">
+<div class="container">
     <div class="row">
         <button onclick="window.location='/';" class="btn btn-primary btn-danger">Home</button>
         <p>&nbsp</p>
@@ -19,38 +20,43 @@
     </div>
     <br>
     <div class="row">
-        <div class="col box">
-            <h3>Departments List</h3>
-            <p>This course catalog features <b>{{ output|length }}</b> course(s) <a href="https://github.com/segalgouldn/sproj-course-catalog-parser">web-scraped</a> from Bard College's Course Catalog and <a href="https://github.com/segalgouldn/sproj-course-catalog-server">served</a> to you.</p>
-            <small><p>As a part of my Senior Project, this site is still a work-in-progress. I am not liable for any mistakes you may encounter during its use.</p></small>
-            <form>
-                <input type="text" class="search" name="search" placeholder="Search...">
-            </form>
+        <div class="box">
+            <div class="col">
+                <h3>Departments List</h3>
+                <p>This course catalog features <b>{{ output|length }}</b> course(s) <a href="https://github.com/segalgouldn/sproj-course-catalog-parser">web-scraped</a> from Bard College's Course Catalog and <a href="https://github.com/segalgouldn/sproj-course-catalog-server">served</a> to you.</p>
+                <small><p>As a part of my Senior Project, this site is still a work-in-progress. I am not liable for any mistakes you may encounter during its use.</p></small>
+                <form>
+                    <input type="text" class="form-control" name="search" placeholder="Search">
+                </form>
+            </div>
         </div>
     </div>
+    <br>
     <div class="row">
-        <div class="col">
-            <div class="page">
-                <table class="layout display">
-                    <thead>
+        <div class="box">
+            <div class="col">
+                <div class="page">
+                    <table class="layout display">
+                        <thead>
                         <tr>
                             <th>Department</th>
                         </tr>
-                    </thead>
-                    <tbody>
-                    {% for item in output %}
-                        {% if "/semesters/" in request.path %}
-                        <tr>
-                            <td><a href="{{ request.path + "/" + item }}">{{ item }}</a></td>
-                        </tr>
-                        {% else %}
-                        <tr>
-                            <td><a href="{{ "/departments/" + item }}">{{ item }}</a></td>
-                        </tr>
-                        {% endif %}
-                    {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        {% for item in output %}
+                            {% if "/semesters/" in request.path %}
+                                <tr>
+                                    <td><a href="{{ request.path + "/" + item }}">{{ item }}</a></td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td><a href="{{ "/departments/" + item }}">{{ item }}</a></td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>courses.segal-gould.com</title>
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
@@ -19,58 +20,63 @@
     </div>
     <br>
     <div class="row">
-        <div class="col box">
-            {% if "/all" in request.path %}
-                <h3>All Courses</h3>
-            {% elif "/crn/" in request.path %}
-                <h3>All courses with Course Registration Number "{{ output[0][2][1] }}"</h3>
-            {% elif "/course_code/" in request.path %}
-                <h3>All courses with Course Code "{{ output[0][1][1] }}"</h3>
-            {% elif "/professors/" in request.path %}
-                <h3>All courses taught by professor(s) with name(s) "{{ output[0][9][1] }}"</h3>
-            {% elif "/locations/" in request.path %}
-                <h3>All courses taught in location known as "{{ output[0][6][1] }}"</h3>
-            {% elif "/user/" in request.path %}
-                <h3>Favorite courses for user "<a href="/user/{{ username|urlencode }}">{{ username }}</a>"</h3>
-            {% else %}
-                <h3>{{ output[0][4][1] }} courses</h3>
-            {% endif %}
-            <p>This course catalog features <b>{{ output|length }}</b> course(s) <a href="https://github.com/segalgouldn/sproj-course-catalog-parser">web-scraped</a> from Bard College's Course Catalog and <a href="https://github.com/segalgouldn/sproj-course-catalog-server">served</a> to you.</p>
-            <small><p>As a part of my Senior Project, this site is still a work-in-progress. I am not liable for any mistakes you may encounter during its use.</p></small>
-            <form>
-                <input type="text" class="search" name="search" placeholder="Search...">
-            </form>
+        <div class="box">
+            <div class="col">
+                {% if "/all" in request.path %}
+                    <h3>All Courses</h3>
+                {% elif "/crn/" in request.path %}
+                    <h3>All courses with Course Registration Number "{{ output[0][2][1] }}"</h3>
+                {% elif "/course_code/" in request.path %}
+                    <h3>All courses with Course Code "{{ output[0][1][1] }}"</h3>
+                {% elif "/professors/" in request.path %}
+                    <h3>All courses taught by professor(s) with name(s) "{{ output[0][9][1] }}"</h3>
+                {% elif "/locations/" in request.path %}
+                    <h3>All courses taught in location known as "{{ output[0][6][1] }}"</h3>
+                {% elif "/user/" in request.path %}
+                    <h3>Favorite courses for user "<a href="/user/{{ username|urlencode }}">{{ username }}</a>"</h3>
+                {% else %}
+                    <h3>{{ output[0][4][1] }} courses</h3>
+                {% endif %}
+                <p>This course catalog features <b>{{ output|length }}</b> course(s) <a href="https://github.com/segalgouldn/sproj-course-catalog-parser">web-scraped</a> from Bard College's Course Catalog and <a href="https://github.com/segalgouldn/sproj-course-catalog-server">served</a> to you.</p>
+                <small><p>As a part of my Senior Project, this site is still a work-in-progress. I am not liable for any mistakes you may encounter during its use.</p></small>
+                <form>
+                    <input type="text" class="form-control" name="search" placeholder="Search">
+                </form>
+            </div>
         </div>
     </div>
     <br>
     <div class="row">
-        <div class="col box">
-            <div class="row justify-content-center">
-                <p>Sort by:</p>
-            </div>
-            <div class="row justify-content-center">
-                <button onclick="window.location='?sort=course_registration_number';" class="btn btn-primary btn-danger">CRN</button>
-                <p>&nbsp</p>
-                <button onclick="window.location='?sort=course_code';" class="btn btn-primary btn-danger">Course Code</button>
-                <p>&nbsp</p>
-                <button onclick="window.location='?sort=new_distributions';" class="btn btn-primary btn-danger">New Distributions</button>
-                <p>&nbsp</p>
-                <button onclick="window.location='?sort=old_distributions';" class="btn btn-primary btn-danger">Old Distributions</button>
-                <p>&nbsp</p>
-                <button onclick="window.location='?sort=department';" class="btn btn-primary btn-danger">Department</button>
-                <p>&nbsp</p>
-                <button onclick="window.location='?sort=semester';" class="btn btn-primary btn-danger">Semester</button>
-                <p>&nbsp</p>
-                <button onclick="window.location='?sort=course_title';" class="btn btn-primary btn-danger">Course Title</button>
-                <p>&nbsp</p>
-                <button onclick="window.location='?sort=professors';" class="btn btn-primary btn-danger">Professors</button>
-                <p>&nbsp</p>
-                <button onclick="window.location='?sort=locations';" class="btn btn-primary btn-danger">Locations</button>
-                <p>&nbsp</p>
-                <button onclick="window.location='?sort=schedules';" class="btn btn-primary btn-danger">Schedules</button>
+        <div class="box">
+            <div class="col">
+                <div class="row justify-content-center">
+                    <p>Sort by:</p>
+                </div>
+                <div class="row justify-content-md-center justify-content-sm-around">
+                    <button onclick="window.location='?sort=course_registration_number';" class="btn btn-primary btn-danger">CRN</button>
+                    <p>&nbsp</p>
+                    <button onclick="window.location='?sort=course_code';" class="btn btn-primary btn-danger">Course Code</button>
+                    <p>&nbsp</p>
+                    <button onclick="window.location='?sort=new_distributions';" class="btn btn-primary btn-danger">New Distributions</button>
+                    <p>&nbsp</p>
+                    <button onclick="window.location='?sort=old_distributions';" class="btn btn-primary btn-danger">Old Distributions</button>
+                    <p>&nbsp</p>
+                    <button onclick="window.location='?sort=department';" class="btn btn-primary btn-danger">Department</button>
+                    <p>&nbsp</p>
+                    <button onclick="window.location='?sort=semester';" class="btn btn-primary btn-danger">Semester</button>
+                    <p>&nbsp</p>
+                    <button onclick="window.location='?sort=course_title';" class="btn btn-primary btn-danger">Course Title</button>
+                    <p>&nbsp</p>
+                    <button onclick="window.location='?sort=professors';" class="btn btn-primary btn-danger">Professors</button>
+                    <p>&nbsp</p>
+                    <button onclick="window.location='?sort=locations';" class="btn btn-primary btn-danger">Locations</button>
+                    <p>&nbsp</p>
+                    <button onclick="window.location='?sort=schedules';" class="btn btn-primary btn-danger">Schedules</button>
+                </div>
             </div>
         </div>
     </div>
+    <br>
     <div class="row">
         <div class="col">
             <div class="page">
@@ -151,6 +157,7 @@
                         </tr>
                         </tbody>
                     </table>
+                    <br>
                 {% endfor %}
             </div>
         </div>

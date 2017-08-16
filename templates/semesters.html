@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>courses.segal-gould.com</title>
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
@@ -19,32 +20,37 @@
     </div>
     <br>
     <div class="row">
-        <div class="col box">
-            <h3>Semesters List</h3>
-            <p>This course catalog features <b>{{ output|length }}</b> course(s) <a href="https://github.com/segalgouldn/sproj-course-catalog-parser">web-scraped</a> from Bard College's Course Catalog and <a href="https://github.com/segalgouldn/sproj-course-catalog-server">served</a> to you.</p>
-            <small><p>As a part of my Senior Project, this site is still a work-in-progress. I am not liable for any mistakes you may encounter during its use.</p></small>
-            <form>
-                <input type="text" class="search" name="search" placeholder="Search...">
-            </form>
+        <div class="box">
+            <div class="col">
+                <h3>Semesters List</h3>
+                <p>This course catalog features <b>{{ output|length }}</b> course(s) <a href="https://github.com/segalgouldn/sproj-course-catalog-parser">web-scraped</a> from Bard College's Course Catalog and <a href="https://github.com/segalgouldn/sproj-course-catalog-server">served</a> to you.</p>
+                <small><p>As a part of my Senior Project, this site is still a work-in-progress. I am not liable for any mistakes you may encounter during its use.</p></small>
+                <form>
+                    <input type="text" class="form-control" name="search" placeholder="Search">
+                </form>
+            </div>
         </div>
     </div>
+    <br>
     <div class="row">
-        <div class="col">
-            <div class="page">
-                <table class="layout display">
-                    <thead>
+        <div class="box">
+            <div class="col">
+                <div class="page">
+                    <table class="layout display">
+                        <thead>
                         <tr>
                             <th>Semester</th>
                         </tr>
-                    </thead>
-                    <tbody>
-                    {% for item in output %}
-                        <tr>
-                            <td><a href="{{ "/semesters/" + item }}">{{ item }}</a></td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        {% for item in output %}
+                            <tr>
+                                <td><a href="{{ "/semesters/" + item }}">{{ item }}</a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
