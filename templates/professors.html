@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    <title>Departments</title>
+    <title>Professors</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'style.css') }}">
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
@@ -22,8 +22,8 @@
     <div class="row">
         <div class="box">
             <div class="col">
-                <h3>Departments List</h3>
-                <p>This course catalog features <b>{{ output|length }}</b> department(s) <a href="https://github.com/segalgouldn/sproj-course-catalog-parser">web-scraped</a> from Bard College's Course Catalog and <a href="https://github.com/segalgouldn/sproj-course-catalog-server">served</a> to you.</p>
+                <h3>Professors List</h3>
+                <p>This course catalog features <b>{{ output|length }}</b> professor(s) <a href="https://github.com/segalgouldn/sproj-course-catalog-parser">web-scraped</a> from Bard College's Course Catalog and <a href="https://github.com/segalgouldn/sproj-course-catalog-server">served</a> to you.</p>
                 <small><p>As a part of my Senior Project, this site is still a work-in-progress. I am not liable for any mistakes you may encounter during its use.</p></small>
                 <form>
                     <input type="text" class="form-control" name="search" placeholder="Search">
@@ -39,18 +39,14 @@
                     <table class="layout display">
                         <thead>
                         <tr>
-                            <th>Department</th>
+                            <th>Professor</th>
                         </tr>
                         </thead>
                         <tbody>
                         {% for item in output %}
-                            {% if "/semesters/" in request.path %}
+                            {% if item != "" %}
                                 <tr>
-                                    <td><a href="{{ request.path + "/" + item|urlencode }}">{{ item }}</a></td>
-                                </tr>
-                            {% else %}
-                                <tr>
-                                    <td><a href="{{ "/departments/" + item|urlencode }}">{{ item }}</a></td>
+                                    <td><a href="{{ "/professors/" + item|urlencode }}">{{ item }}</a></td>
                                 </tr>
                             {% endif %}
                         {% endfor %}

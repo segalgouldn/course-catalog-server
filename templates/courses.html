@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>courses.segal-gould.com</title>
+    <title>Courses</title>
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'style.css') }}">
@@ -100,7 +100,7 @@
                         <tbody>
                         <tr>
                             <td class="CRN"><a href="/crn/{{ item[2][1] }}">{{ item[2][1] }}</a></td>
-                            <td class="Course Code"><a href="/course_code/{{ item[1][1]|replace(" ", "_") }}">{{ item[1][1] }}</a></td>
+                            <td class="Course Code"><a href="/course_code/{{ item[1][1]|urlencode }}">{{ item[1][1] }}</a></td>
                             <td class="New Distributions">
                                 {% if item[7][1] == "" %}
                                     None
@@ -122,10 +122,10 @@
                                 {% if item[9][1] == "" %}
                                     None
                                 {% else %}
-                                    <a href="/professors/{{ item[9][1]|replace(" ", "_") }}">{{ item[9][1] }}</a>
+                                    <a href="/professors/{{ item[9][1]|urlencode }}">{{ item[9][1] }}</a>
                                 {% endif %}
                             </td>
-                            <td class="Locations"><a href="/locations/{{ item[6][1]|replace(" ", "_") }}">{{ item[6][1] }}</a></td>
+                            <td class="Locations"><a href="/locations/{{ item[6][1]|urlencode }}">{{ item[6][1] }}</a></td>
                             <td class="Schedules">{{ item[10][1] }}</td>
                             <td class="URL"><a href="{{ item[12][1] }}">{{ item[4][1] + " " + item[11][1] }}</a></td>
                         </tr>
@@ -143,6 +143,9 @@
                                 <div class="container-fluid">
                                     <div class="row">
                                         <p>{{ item[5][1] }}</p>
+                                    </div>
+                                    <div class="row">
+                                        <p><b><a href="https://www.ratemyprofessors.com/search.jsp?queryoption=HEADER&queryBy=teacherName&schoolName=Bard+College&schoolID=82&query={{ item[9][1]|urlencode }}">Search for this course's instructor on Rate My Professors</a></b>.</p>
                                     </div>
                                     <div class="row">
                                         <p><b>Add or remove from favorites:</b></p>
