@@ -17,13 +17,12 @@ a:hover {
     color: #802e2e;
 }
 .page{
-    max-width: 80em;
+    max-width: 95vw;
     margin: 0 auto;
 }
 .box{
     padding: .5em 1em;
     background: #fff;
-    max-width: 80em;
     margin: 0 auto;
     border: 1px solid #ab3d3d;
     box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
@@ -108,7 +107,7 @@ table.responsive-table{
     table.responsive-table td:nth-child(9),
     table.responsive-table td:nth-child(10),
     table.responsive-table td:nth-child(11){
-        padding-left: 170px;
+        padding-left: 10em;
     }
     table.responsive-table td:nth-child(1):before,
     table.responsive-table td:nth-child(2):before,

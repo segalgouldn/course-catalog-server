@@ -53,12 +53,30 @@
             <div class="col">
                 <h2>Welcome to <b>courses.segal-gould.com</b></h2>
                 <p>This course catalog features courses <a href="https://github.com/segalgouldn/sproj-course-catalog-parser">web-scraped</a> from Bard College's Course Catalog and <a href="https://github.com/segalgouldn/sproj-course-catalog-server">served</a> to you.</p>
-                <p>It is by no means exhaustive.</p>
-                <p>To browse, visit:</p>
-                <p><a href="/semesters"> <b>courses.segal-gould.com/semesters </b></a>for courses by semester.</p>
-                <p><a href="/departments"> <b>courses.segal-gould.com/departments </b></a>for courses by department.</p>
-                <p><a href="/professors"> <b>courses.segal-gould.com/professors </b></a>for a list of professors in the database.</p>
-                <p><a href="/locations"> <b>courses.segal-gould.com/locations </b></a>for a list of locations in the database.</p>
+
+                <p>It is by no means exhaustive but feel free to browse.</p>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-danger btn-lg">Browse by:</button>
+                    <button type="button" class="btn btn-danger btn-lg dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/semesters"><b>Semesters</b></a>
+                        <a class="dropdown-item" href="/departments"><b>Departments</b></a>
+                        <a class="dropdown-item" href="/professors"><b>Professors</b></a>
+                        <a class="dropdown-item" href="/locations"><b>Locations</b></a>
+                        <a class="dropdown-item" href="/course_codes"><b>Course Codes</b></a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/old_distributions"><b>Old Distributions</b></a>
+                        <a class="dropdown-item" href="/new_distributions"><b>New Distributions</b></a>
+                        {% if username %}
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/user/{{ username|urlencode }}"><b>{{ username }}'s favorites</b></a>
+                        {% endif %}
+                    </div>
+                </div>
+                <br>
+                <br>
                 <small><p>As a part of my Senior Project, this site is still a work-in-progress. I am not liable for any mistakes you may encounter during its use.</p></small>
             </div>
         </div>

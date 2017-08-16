@@ -26,18 +26,26 @@
                     <h3>All Courses</h3>
                 {% elif "/crn/" in request.path %}
                     <h3>All courses with Course Registration Number "{{ output[0][2][1] }}"</h3>
-                {% elif "/course_code/" in request.path %}
+                {% elif "/course_codes/" in request.path %}
                     <h3>All courses with Course Code "{{ output[0][1][1] }}"</h3>
                 {% elif "/professors/" in request.path %}
                     <h3>All courses taught by professor(s) with name(s) "{{ output[0][9][1] }}"</h3>
                 {% elif "/locations/" in request.path %}
                     <h3>All courses taught in location known as "{{ output[0][6][1] }}"</h3>
+                {% elif "/old_distributions/" in request.path %}
+                    <h3>All courses taught with old distributions "{{ output[0][8][1] }}"</h3>
+                {% elif "/new_distributions/" in request.path %}
+                    <h3>All courses taught with new distributions "{{ output[0][7][1] }}"</h3>
                 {% elif "/user/" in request.path %}
                     <h3>Favorite courses for user "<a href="/user/{{ username|urlencode }}">{{ username }}</a>"</h3>
                 {% else %}
                     <h3>{{ output[0][4][1] }} courses</h3>
                 {% endif %}
-                <p>This course catalog features <b>{{ output|length }}</b> course(s) <a href="https://github.com/segalgouldn/sproj-course-catalog-parser">web-scraped</a> from Bard College's Course Catalog and <a href="https://github.com/segalgouldn/sproj-course-catalog-server">served</a> to you.</p>
+                {% if output|length != 1 %}
+                    <p>This course catalog features <b>{{ output|length }}</b> courses <a href="https://github.com/segalgouldn/sproj-course-catalog-parser">web-scraped</a> from Bard College's Course Catalog and <a href="https://github.com/segalgouldn/sproj-course-catalog-server">served</a> to you.</p>
+                {% else %}
+                    <p>This course catalog features <b>{{ output|length }}</b> course <a href="https://github.com/segalgouldn/sproj-course-catalog-parser">web-scraped</a> from Bard College's Course Catalog and <a href="https://github.com/segalgouldn/sproj-course-catalog-server">served</a> to you.</p>
+                {% endif %}
                 <small><p>As a part of my Senior Project, this site is still a work-in-progress. I am not liable for any mistakes you may encounter during its use.</p></small>
                 <form>
                     <input type="text" class="form-control" name="search" placeholder="Search">
@@ -100,19 +108,19 @@
                         <tbody>
                         <tr>
                             <td class="CRN"><a href="/crn/{{ item[2][1] }}">{{ item[2][1] }}</a></td>
-                            <td class="Course Code"><a href="/course_code/{{ item[1][1]|urlencode }}">{{ item[1][1] }}</a></td>
+                            <td class="Course Code"><a href="/course_codes/{{ item[1][1]|urlencode }}">{{ item[1][1] }}</a></td>
                             <td class="New Distributions">
                                 {% if item[7][1] == "" %}
                                     None
                                 {% else %}
-                                    {{ item[7][1] }}
+                                    <a href="{{ "/new_distributions/" + item[7][1]|urlencode }}">{{ item[7][1] }}</a>
                                 {% endif %}
                             </td>
                             <td class="Old Distributions">
                                 {% if item[8][1] == "" %}
                                     None
                                 {% else %}
-                                    {{ item[8][1] }}
+                                    <a href="{{ "/old_distributions/" + item[8][1]|urlencode }}">{{ item[8][1] }}</a>
                                 {% endif %}
                             </td>
                             <td class="Department"><a href="/departments/{{ item[4][1] }}">{{ item[4][1] }}</a></td>
@@ -131,7 +139,7 @@
                         </tr>
                         </tbody>
                     </table>
-                    <table class="layout display">
+                    <table class="display">
                         <thead>
                         <tr>
                             <th>Description</th>
@@ -161,6 +169,10 @@
                         </tbody>
                     </table>
                     <br>
+                {% else %}
+                    <tr>
+                        <td>Nothing to show</td>
+                    </tr>
                 {% endfor %}
             </div>
         </div>

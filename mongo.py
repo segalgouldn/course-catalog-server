@@ -227,7 +227,7 @@ def get_courses_by_crn(course_registration_number):
     return render_template('courses.html', output=output)
 
 
-@app.route('/course_code/<path:course_code>')
+@app.route('/course_codes/<path:course_code>')
 def get_courses_by_code(course_code):
     search_query = request.args.get('search', None)
     if search_query is not None:
@@ -458,6 +458,160 @@ def get_courses_by_location(locations):
     return render_template('courses.html', output=output)
 
 
+@app.route('/old_distributions/<path:old_distributions>')
+def get_courses_by_old_distributions(old_distributions):
+    search_query = request.args.get('search', None)
+    if search_query is not None:
+        mongo.db.courselist.drop_indexes()
+        mongo.db.courselist.create_index([("$**", "text")], name="textScore")
+        cursor = mongo.db.courselist.find({'$text': {'$search': search_query.replace("+", " ")}},
+                                          {'score': {'$meta': 'textScore'}})
+        cursor.sort([('score', {'$meta': 'textScore'})])
+        output = list(sorted(dict(c).items()) for c in cursor)
+        for course in output:
+            del course[11]
+        if len(output) >= 1:
+            return render_template('courses.html', output=output)
+    sorted_query = request.args.get('sort', None)
+    if sorted_query is not None:
+        courses = mongo.db.courselist
+        if sorted_query == "course_registration_number":
+            output = sorted(
+                [sorted(c.items()) for c in courses.find({"old_distributions": old_distributions.replace("_", " ")})],
+                key=lambda k: k[2][1])
+            return render_template('courses.html', output=output)
+        elif sorted_query == "course_code":
+            output = sorted(
+                [sorted(c.items()) for c in courses.find({"old_distributions": old_distributions.replace("_", " ")})],
+                key=lambda k: k[1][1])
+            return render_template('courses.html', output=output)
+        elif sorted_query == "new_distributions":
+            output = sorted(
+                [sorted(c.items()) for c in courses.find({"old_distributions": old_distributions.replace("_", " ")})],
+                key=lambda k: k[7][1])
+            return render_template('courses.html', output=output)
+        elif sorted_query == "old_distributions":
+            output = sorted(
+                [sorted(c.items()) for c in courses.find({"old_distributions": old_distributions.replace("_", " ")})],
+                key=lambda k: k[8][1])
+            return render_template('courses.html', output=output)
+        elif sorted_query == "department":
+            output = sorted(
+                [sorted(c.items()) for c in courses.find({"old_distributions": old_distributions.replace("_", " ")})],
+                key=lambda k: k[4][1])
+            return render_template('courses.html', output=output)
+        elif sorted_query == "semester":
+            output = sorted(
+                [sorted(c.items()) for c in courses.find({"old_distributions": old_distributions.replace("_", " ")})],
+                key=lambda k: k[11][1])
+            return render_template('courses.html', output=output)
+        elif sorted_query == "course_title":
+            output = sorted(
+                [sorted(c.items()) for c in courses.find({"old_distributions": old_distributions.replace("_", " ")})],
+                key=lambda k: k[3][1])
+            return render_template('courses.html', output=output)
+        elif sorted_query == "professors":
+            output = sorted(
+                [sorted(c.items()) for c in courses.find({"old_distributions": old_distributions.replace("_", " ")})],
+                key=lambda k: k[9][1])
+            return render_template('courses.html', output=output)
+        elif sorted_query == "locations":
+            output = sorted(
+                [sorted(c.items()) for c in courses.find({"old_distributions": old_distributions.replace("_", " ")})],
+                key=lambda k: k[6][1])
+            return render_template('courses.html', output=output)
+        elif sorted_query == "schedules":
+            output = sorted(
+                [sorted(c.items()) for c in courses.find({"old_distributions": old_distributions.replace("_", " ")})],
+                key=lambda k: k[10][1])
+            return render_template('courses.html', output=output)
+        else:
+            courses = mongo.db.courselist
+            output = [sorted(c.items()) for c in
+                      courses.find({"old_distributions": old_distributions.replace("_", " ")})]
+            return render_template('courses.html', output=output)
+    courses = mongo.db.courselist
+    output = [sorted(c.items()) for c in courses.find({"old_distributions": old_distributions.replace("_", " ")})]
+    return render_template('courses.html', output=output)
+
+
+@app.route('/new_distributions/<path:new_distributions>')
+def get_courses_by_new_distributions(new_distributions):
+    search_query = request.args.get('search', None)
+    if search_query is not None:
+        mongo.db.courselist.drop_indexes()
+        mongo.db.courselist.create_index([("$**", "text")], name="textScore")
+        cursor = mongo.db.courselist.find({'$text': {'$search': search_query.replace("+", " ")}},
+                                          {'score': {'$meta': 'textScore'}})
+        cursor.sort([('score', {'$meta': 'textScore'})])
+        output = list(sorted(dict(c).items()) for c in cursor)
+        for course in output:
+            del course[11]
+        if len(output) >= 1:
+            return render_template('courses.html', output=output)
+    sorted_query = request.args.get('sort', None)
+    if sorted_query is not None:
+        courses = mongo.db.courselist
+        if sorted_query == "course_registration_number":
+            output = sorted(
+                [sorted(c.items()) for c in courses.find({"new_distributions": new_distributions.replace("_", " ")})],
+                key=lambda k: k[2][1])
+            return render_template('courses.html', output=output)
+        elif sorted_query == "course_code":
+            output = sorted(
+                [sorted(c.items()) for c in courses.find({"new_distributions": new_distributions.replace("_", " ")})],
+                key=lambda k: k[1][1])
+            return render_template('courses.html', output=output)
+        elif sorted_query == "new_distributions":
+            output = sorted(
+                [sorted(c.items()) for c in courses.find({"new_distributions": new_distributions.replace("_", " ")})],
+                key=lambda k: k[7][1])
+            return render_template('courses.html', output=output)
+        elif sorted_query == "old_distributions":
+            output = sorted(
+                [sorted(c.items()) for c in courses.find({"new_distributions": new_distributions.replace("_", " ")})],
+                key=lambda k: k[8][1])
+            return render_template('courses.html', output=output)
+        elif sorted_query == "department":
+            output = sorted(
+                [sorted(c.items()) for c in courses.find({"new_distributions": new_distributions.replace("_", " ")})],
+                key=lambda k: k[4][1])
+            return render_template('courses.html', output=output)
+        elif sorted_query == "semester":
+            output = sorted(
+                [sorted(c.items()) for c in courses.find({"new_distributions": old_distributions.replace("_", " ")})],
+                key=lambda k: k[11][1])
+            return render_template('courses.html', output=output)
+        elif sorted_query == "course_title":
+            output = sorted(
+                [sorted(c.items()) for c in courses.find({"new_distributions": new_distributions.replace("_", " ")})],
+                key=lambda k: k[3][1])
+            return render_template('courses.html', output=output)
+        elif sorted_query == "professors":
+            output = sorted(
+                [sorted(c.items()) for c in courses.find({"new_distributions": new_distributions.replace("_", " ")})],
+                key=lambda k: k[9][1])
+            return render_template('courses.html', output=output)
+        elif sorted_query == "locations":
+            output = sorted(
+                [sorted(c.items()) for c in courses.find({"new_distributions": new_distributions.replace("_", " ")})],
+                key=lambda k: k[6][1])
+            return render_template('courses.html', output=output)
+        elif sorted_query == "schedules":
+            output = sorted(
+                [sorted(c.items()) for c in courses.find({"new_distributions": new_distributions.replace("_", " ")})],
+                key=lambda k: k[10][1])
+            return render_template('courses.html', output=output)
+        else:
+            courses = mongo.db.courselist
+            output = [sorted(c.items()) for c in
+                      courses.find({"old_distributions": new_distributions.replace("_", " ")})]
+            return render_template('courses.html', output=output)
+    courses = mongo.db.courselist
+    output = [sorted(c.items()) for c in courses.find({"new_distributions": new_distributions.replace("_", " ")})]
+    return render_template('courses.html', output=output)
+
+
 @app.route('/all')
 def get_all_courses():
     search_query = request.args.get('search', None)
@@ -621,6 +775,39 @@ def get_locations():
         locations = [location for location in all_locations if search_query.replace("+", " ") in location]
         return render_template('locations.html', output=locations)
     return render_template('locations.html', output=all_locations)
+
+
+@app.route('/course_codes')
+def get_course_codes():
+    search_query = request.args.get('search', None)
+    courses = mongo.db.courselist
+    all_course_codes = sorted(set([course_dict["course_code"] for course_dict in courses.find()]))
+    if search_query is not None:
+        course_codes = [course_code for course_code in all_course_codes if search_query.replace("+", " ") in course_code]
+        return render_template('course_codes.html', output=course_codes)
+    return render_template('course_codes.html', output=all_course_codes)
+
+
+@app.route('/old_distributions')
+def get_old_distributions():
+    search_query = request.args.get('search', None)
+    courses = mongo.db.courselist
+    all_old_distributions = sorted(set([course_dict["old_distributions"] for course_dict in courses.find()]))
+    if search_query is not None:
+        old_distributions = [old_distribution for old_distribution in all_old_distributions if search_query.replace("+", " ") in old_distribution]
+        return render_template('old_distributions.html', output=old_distributions)
+    return render_template('old_distributions.html', output=all_old_distributions)
+
+
+@app.route('/new_distributions')
+def get_new_distributions():
+    search_query = request.args.get('search', None)
+    courses = mongo.db.courselist
+    all_new_distributions = sorted(set([course_dict["new_distributions"] for course_dict in courses.find()]))
+    if search_query is not None:
+        new_distributions = [new_distribution for new_distribution in all_new_distributions if search_query.replace("+", " ") in new_distribution]
+        return render_template('new_distributions.html', output=new_distributions)
+    return render_template('new_distributions.html', output=all_new_distributions)
 
 
 @app.route('/departments/<string:department>')

@@ -23,7 +23,11 @@
         <div class="box">
             <div class="col">
                 <h3>Professors List</h3>
-                <p>This course catalog features <b>{{ output|length }}</b> location(s) <a href="https://github.com/segalgouldn/sproj-course-catalog-parser">web-scraped</a> from Bard College's Course Catalog and <a href="https://github.com/segalgouldn/sproj-course-catalog-server">served</a> to you.</p>
+                {% if output|length != 1 %}
+                    <p>This course catalog features <b>{{ output|length }}</b> locations <a href="https://github.com/segalgouldn/sproj-course-catalog-parser">web-scraped</a> from Bard College's Course Catalog and <a href="https://github.com/segalgouldn/sproj-course-catalog-server">served</a> to you.</p>
+                {% else %}
+                    <p>This course catalog features <b>{{ output|length }}</b> location <a href="https://github.com/segalgouldn/sproj-course-catalog-parser">web-scraped</a> from Bard College's Course Catalog and <a href="https://github.com/segalgouldn/sproj-course-catalog-server">served</a> to you.</p>
+                {% endif %}
                 <small><p>As a part of my Senior Project, this site is still a work-in-progress. I am not liable for any mistakes you may encounter during its use.</p></small>
                 <form>
                     <input type="text" class="form-control" name="search" placeholder="Search">
@@ -49,6 +53,10 @@
                                     <td><a href="{{ "/locations/" + item|urlencode }}">{{ item }}</a></td>
                                 </tr>
                             {% endif %}
+                        {% else %}
+                            <tr>
+                                <td>Nothing to show</td>
+                            </tr>
                         {% endfor %}
                         </tbody>
                     </table>
