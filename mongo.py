@@ -927,7 +927,7 @@ def api_get_courses_by_department(department):
     return jsonify({'result': final_output})
 
 
-@app.route('/api/distribution/<string:distribution>', methods=['GET'])
+@app.route('/api/distribution/<path:distribution>', methods=['GET'])
 def api_get_courses_by_distribution(distribution):
     courses = mongo.db.courselist
     courselist = courses.find({'old_distributions': distribution})
@@ -996,7 +996,7 @@ def api_get_courses_by_crn(course_registration_number):
     return jsonify({'result': final_output})
 
 
-@app.route('/api/course_code/<string:course_code>', methods=['GET'])
+@app.route('/api/course_codes/<path:course_code>', methods=['GET'])
 def api_get_courses_by_code(course_code):
     courses = mongo.db.courselist
     courselist = courses.find({'course_code': course_code.replace("_", " ")})
@@ -1019,7 +1019,7 @@ def api_get_courses_by_code(course_code):
     return jsonify({'result': final_output})
 
 
-@app.route('/api/professors/<string:professors>', methods=['GET'])
+@app.route('/api/professors/<path:professors>', methods=['GET'])
 def api_get_courses_by_professor(professors):
     courses = mongo.db.courselist
     courselist = courses.find({'professors': professors.replace("_", " ")})
