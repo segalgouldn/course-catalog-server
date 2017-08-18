@@ -23,8 +23,7 @@ def get_courses_for_user(username):
         if courses:
             search_query = request.args.get('search', None)
             if search_query is not None:
-                mongo.db.courselist.drop_indexes()
-                mongo.db.courselist.create_index([("$**", "text")], name="textScore")
+                mongo.db.courselist.ensure_index([("$**", "text")], name="textScore")
                 cursor = mongo.db.courselist.find({'$text': {'$search': search_query.replace("+", " ")}}, {'score': {'$meta': 'textScore'}})
                 cursor.sort([('score', {'$meta': 'textScore'})])
                 output = list(sorted(dict(c).items()) for c in cursor)
@@ -155,8 +154,7 @@ def register():
 def get_courses_by_crn(course_registration_number):
     search_query = request.args.get('search', None)
     if search_query is not None:
-        mongo.db.courselist.drop_indexes()
-        mongo.db.courselist.create_index([("$**", "text")], name="textScore")
+        mongo.db.courselist.ensure_index([("$**", "text")], name="textScore")
         cursor = mongo.db.courselist.find({'$text': {'$search': search_query.replace("+", " ")}},
                                           {'score': {'$meta': 'textScore'}})
         cursor.sort([('score', {'$meta': 'textScore'})])
@@ -231,8 +229,7 @@ def get_courses_by_crn(course_registration_number):
 def get_courses_by_code(course_code):
     search_query = request.args.get('search', None)
     if search_query is not None:
-        mongo.db.courselist.drop_indexes()
-        mongo.db.courselist.create_index([("$**", "text")], name="textScore")
+        mongo.db.courselist.ensure_index([("$**", "text")], name="textScore")
         cursor = mongo.db.courselist.find({'$text': {'$search': search_query.replace("+", " ")}},
                                           {'score': {'$meta': 'textScore'}})
         cursor.sort([('score', {'$meta': 'textScore'})])
@@ -308,8 +305,7 @@ def get_courses_by_code(course_code):
 def get_courses_by_professor(professors):
     search_query = request.args.get('search', None)
     if search_query is not None:
-        mongo.db.courselist.drop_indexes()
-        mongo.db.courselist.create_index([("$**", "text")], name="textScore")
+        mongo.db.courselist.ensure_index([("$**", "text")], name="textScore")
         cursor = mongo.db.courselist.find({'$text': {'$search': search_query.replace("+", " ")}},
                                           {'score': {'$meta': 'textScore'}})
         cursor.sort([('score', {'$meta': 'textScore'})])
@@ -385,8 +381,7 @@ def get_courses_by_professor(professors):
 def get_courses_by_location(locations):
     search_query = request.args.get('search', None)
     if search_query is not None:
-        mongo.db.courselist.drop_indexes()
-        mongo.db.courselist.create_index([("$**", "text")], name="textScore")
+        mongo.db.courselist.ensure_index([("$**", "text")], name="textScore")
         cursor = mongo.db.courselist.find({'$text': {'$search': search_query.replace("+", " ")}},
                                           {'score': {'$meta': 'textScore'}})
         cursor.sort([('score', {'$meta': 'textScore'})])
@@ -462,8 +457,7 @@ def get_courses_by_location(locations):
 def get_courses_by_old_distributions(old_distributions):
     search_query = request.args.get('search', None)
     if search_query is not None:
-        mongo.db.courselist.drop_indexes()
-        mongo.db.courselist.create_index([("$**", "text")], name="textScore")
+        mongo.db.courselist.ensure_index([("$**", "text")], name="textScore")
         cursor = mongo.db.courselist.find({'$text': {'$search': search_query.replace("+", " ")}},
                                           {'score': {'$meta': 'textScore'}})
         cursor.sort([('score', {'$meta': 'textScore'})])
@@ -539,8 +533,7 @@ def get_courses_by_old_distributions(old_distributions):
 def get_courses_by_new_distributions(new_distributions):
     search_query = request.args.get('search', None)
     if search_query is not None:
-        mongo.db.courselist.drop_indexes()
-        mongo.db.courselist.create_index([("$**", "text")], name="textScore")
+        mongo.db.courselist.ensure_index([("$**", "text")], name="textScore")
         cursor = mongo.db.courselist.find({'$text': {'$search': search_query.replace("+", " ")}},
                                           {'score': {'$meta': 'textScore'}})
         cursor.sort([('score', {'$meta': 'textScore'})])
@@ -616,8 +609,7 @@ def get_courses_by_new_distributions(new_distributions):
 def get_all_courses():
     search_query = request.args.get('search', None)
     if search_query is not None:
-        mongo.db.courselist.drop_indexes()
-        mongo.db.courselist.create_index([("$**", "text")], name="textScore")
+        mongo.db.courselist.ensure_index([("$**", "text")], name="textScore")
         cursor = mongo.db.courselist.find({'$text': {'$search': search_query.replace("+", " ")}}, {'score': {'$meta': 'textScore'}})
         cursor.sort([('score', {'$meta': 'textScore'})])
         output = list(sorted(dict(c).items()) for c in cursor)
@@ -692,8 +684,7 @@ def get_deparments_by_semester(semester):
 def get_courses_by_department_by_semester(semester, department):
     search_query = request.args.get('search', None)
     if search_query is not None:
-        mongo.db.courselist.drop_indexes()
-        mongo.db.courselist.create_index([("$**", "text")], name="textScore")
+        mongo.db.courselist.ensure_index([("$**", "text")], name="textScore")
         cursor = mongo.db.courselist.find({'$text': {'$search': search_query.replace("+", " ")}},
                                           {'score': {'$meta': 'textScore'}})
         cursor.sort([('score', {'$meta': 'textScore'})])
@@ -814,8 +805,7 @@ def get_new_distributions():
 def get_courses_by_department(department):
     search_query = request.args.get('search', None)
     if search_query is not None:
-        mongo.db.courselist.drop_indexes()
-        mongo.db.courselist.create_index([("$**", "text")], name="textScore")
+        mongo.db.courselist.ensure_index([("$**", "text")], name="textScore")
         cursor = mongo.db.courselist.find({'$text': {'$search': search_query.replace("+", " ")}},
                                           {'score': {'$meta': 'textScore'}})
         cursor.sort([('score', {'$meta': 'textScore'})])
