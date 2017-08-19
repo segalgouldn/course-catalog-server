@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <title>Users</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <button onclick="window.location='/';" class="btn btn-primary btn-danger">Home</button>
+        <p>&nbsp</p>
+        <button onclick="history.back();" class="btn btn-primary btn-danger">Previous</button>
+    </div>
+    <br>
+    <div class="row">
+        <div class="box">
+            <div class="col">
+                <h3>Users List</h3>
+                {% if output|length != 1 %}
+                    <p>There are <b>{{ output|length }}</b> users registered.</p>
+                {% else %}
+                    <p>There is <b>{{ output|length }}</b> user registered.</p>
+                {% endif %}
+                <small><p>As a part of my Senior Project, this site is still a work-in-progress. I am not liable for any mistakes you may encounter during its use.</p></small>
+                <form>
+                    <input type="text" class="form-control" name="search" placeholder="Search">
+                </form>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col">
+            <div class="page">
+                <table class="layout display">
+                    <thead>
+                    <tr>
+                        <th>User</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in output %}
+                        {% if item != "" %}
+                            <tr>
+                                <td><a href="{{ request.path + "/" + item|urlencode }}">{{ item }}</a></td>
+                            </tr>
+                        {% endif %}
+                    {% else %}
+                        <tr>
+                            <td>Nothing to show</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
