@@ -36,7 +36,7 @@
                     <h3>All courses taught with old distributions "{{ output[0][8][1] }}"</h3>
                 {% elif "/new_distributions/" in request.path %}
                     <h3>All courses taught with new distributions "{{ output[0][7][1] }}"</h3>
-                {% elif "/user/" in request.path %}
+                {% elif "/users/" in request.path %}
                     <h3>Favorite courses for user "<a href="/user/{{ username|urlencode }}">{{ username }}</a>"</h3>
                 {% else %}
                     <h3>{{ output[0][4][1] }} courses</h3>
