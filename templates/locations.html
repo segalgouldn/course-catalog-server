@@ -37,30 +37,28 @@
     </div>
     <br>
     <div class="row">
-        <div class="box">
-            <div class="col">
-                <div class="page">
-                    <table class="layout display">
-                        <thead>
-                        <tr>
-                            <th>Location</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for item in output %}
-                            {% if item != "" and item != "." and "am" not in item and "pm" not in item %}
-                                <tr>
-                                    <td><a href="{{ "/locations/" + item|urlencode }}">{{ item }}</a></td>
-                                </tr>
-                            {% endif %}
-                        {% else %}
+        <div class="col">
+            <div class="page">
+                <table class="layout display">
+                    <thead>
+                    <tr>
+                        <th>Location</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in output %}
+                        {% if item != "" and item != "." and "am" not in item and "pm" not in item %}
                             <tr>
-                                <td>Nothing to show</td>
+                                <td><a href="{{ "/locations/" + item|urlencode }}">{{ item }}</a></td>
                             </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                        {% endif %}
+                    {% else %}
+                        <tr>
+                            <td>Nothing to show</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

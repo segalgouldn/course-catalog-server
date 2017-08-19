@@ -14,7 +14,18 @@ app.config['MONGO_URI'] = 'mongodb://localhost:27017/courselist'
 mongo = PyMongo(app)
 
 
-@app.route('/user/<path:username>')
+@app.route('/users')
+def get_users():
+    search_query = request.args.get('search', None)
+    users = mongo.db.users
+    all_users = sorted([user_dict["name"] for user_dict in users.find()])
+    if search_query is not None:
+        users = [user for user in all_users if search_query.replace("+", " ") in user]
+        return render_template('users.html', output=users)
+    return render_template('users.html', output=all_users)
+
+
+@app.route('/users/<path:username>')
 def get_courses_for_user(username):
     users = mongo.db.users
     login_user = users.find_one({'name': username})
@@ -572,7 +583,7 @@ def get_courses_by_new_distributions(new_distributions):
             return render_template('courses.html', output=output)
         elif sorted_query == "semester":
             output = sorted(
-                [sorted(c.items()) for c in courses.find({"new_distributions": old_distributions.replace("_", " ")})],
+                [sorted(c.items()) for c in courses.find({"new_distributions": new_distributions.replace("_", " ")})],
                 key=lambda k: k[11][1])
             return render_template('courses.html', output=output)
         elif sorted_query == "course_title":

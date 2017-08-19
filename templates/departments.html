@@ -37,34 +37,32 @@
     </div>
     <br>
     <div class="row">
-        <div class="box">
-            <div class="col">
-                <div class="page">
-                    <table class="layout display">
-                        <thead>
-                        <tr>
-                            <th>Department</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for item in output %}
-                            {% if "/semesters/" in request.path %}
-                                <tr>
-                                    <td><a href="{{ request.path + "/" + item|urlencode }}">{{ item }}</a></td>
-                                </tr>
-                            {% else %}
-                                <tr>
-                                    <td><a href="{{ "/departments/" + item|urlencode }}">{{ item }}</a></td>
-                                </tr>
-                            {% endif %}
+        <div class="col">
+            <div class="page">
+                <table class="layout display">
+                    <thead>
+                    <tr>
+                        <th>Department</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in output %}
+                        {% if "/semesters/" in request.path %}
+                            <tr>
+                                <td><a href="{{ request.path + "/" + item|urlencode }}">{{ item }}</a></td>
+                            </tr>
                         {% else %}
                             <tr>
-                                <td>Nothing to show</td>
+                                <td><a href="{{ "/departments/" + item|urlencode }}">{{ item }}</a></td>
                             </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                        {% endif %}
+                    {% else %}
+                        <tr>
+                            <td>Nothing to show</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

@@ -37,28 +37,26 @@
     </div>
     <br>
     <div class="row">
-        <div class="box">
-            <div class="col">
-                <div class="page">
-                    <table class="layout display">
-                        <thead>
+        <div class="col">
+            <div class="page">
+                <table class="layout display">
+                    <thead>
+                    <tr>
+                        <th>Semester</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in output %}
                         <tr>
-                            <th>Semester</th>
+                            <td><a href="{{ "/semesters/" + item }}">{{ item }}</a></td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        {% for item in output %}
-                            <tr>
-                                <td><a href="{{ "/semesters/" + item }}">{{ item }}</a></td>
-                            </tr>
-                        {% else %}
-                            <tr>
-                                <td>Nothing to show</td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                    {% else %}
+                        <tr>
+                            <td>Nothing to show</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

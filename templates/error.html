@@ -25,7 +25,7 @@
         <div class="row">
             <div class="box">
                 <div class="col">
-                    <h4>Welcome back <a href="/user/{{ username|urlencode }}">{{ username }}</a></h4>
+                    <h4>Welcome back <a href="/users/{{ username|urlencode }}">{{ username }}</a></h4>
                     <p><a href="{{ url_for('logoff') }}">Log off</a>.</p>
                 </div>
             </div>
