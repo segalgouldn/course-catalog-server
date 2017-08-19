@@ -80,9 +80,12 @@ def get_courses_for_user(username):
             output = [sorted(c.items()) for c in courses]
             return render_template('courses.html', output=output, username=username)
         if 'username' in session:
-            return render_template('error.html', error="You haven\'t added any courses yet.", username=session['username'])
-        return render_template('error.html', error="That user hasn\'t added any courses yet.")
-    return render_template('error.html', error="There does not exist a user with that name.")
+            error_string = username + " hasn\'t added any courses yet, " + session['username']
+            return render_template('error.html', error=error_string, username=session['username'])
+        error_string = username + " hasn\'t added any courses yet."
+        return render_template('error.html', error=error_string)
+    error_string = "There does not exist a user with the name: \"" + username + ".\""
+    return render_template('error.html', error=error_string)
 
 
 @app.route('/add_course/<ObjectId:course_id>')
@@ -1043,7 +1046,7 @@ def api_get_courses_by_professor(professors):
     return jsonify({'result': final_output})
 
 
-@app.route('/api/locations/<string:location>', methods=['GET'])
+@app.route('/api/locations/<path:location>', methods=['GET'])
 def api_get_courses_by_location(location):
     courses = mongo.db.courselist
     courselist = courses.find({'locations': location.replace("_", " ")})
