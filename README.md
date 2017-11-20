@@ -1,5 +1,4 @@
 # Course Catalog Server
-### A part of my Senior Project
 Using MongoDB and Flask to serve up some freshly baked courses to students (in a way that is better than [inside.bard.edu](http://inside.bard.edu)).
 
 The project will have three parts:
@@ -14,5 +13,5 @@ At the moment, the server program relies on a preexisting MongoDB database calle
 This project was partially inspired by [@sabo](https://github.com/sabo).
 
 ### Related Repositories:
-* [Course Catalog Parser](https://github.com/segalgouldn/sproj-course-catalog-parser)
-* [Course Catalog Classifier](https://github.com/segalgouldn/sproj-course-catalog-classifier)
+* [Course Catalog Parser](https://github.com/segalgouldn/course-catalog-parser)
+* [Course Catalog Classifier](https://github.com/segalgouldn/course-catalog-classifier)
