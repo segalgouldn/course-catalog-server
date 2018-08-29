@@ -1,5 +1,5 @@
 # Course Catalog Server
-Using MongoDB and Flask to serve up some freshly baked courses to students (in a way that is better than the official [Bard College Course List](http://inside.bard.edu/academic/courses/current/oldlists.html).
+Using MongoDB and Flask to serve up some freshly baked courses to students better than the official [Bard College Course List](http://inside.bard.edu/academic/courses/current/oldlists.html).
 
 At the moment, the server program relies on a preexisting MongoDB database called `courselist`. I created it using the following command in the Bash terminal:
 
