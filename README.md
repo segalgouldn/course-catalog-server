@@ -5,7 +5,7 @@ At the moment, the server program relies on a preexisting MongoDB database calle
 
 `mongoimport --db courselist --file courselist.json --jsonArray`
 
-This project was partially inspired by [@sabo](https://github.com/sabo).
+This project was partially inspired by [@sabo](https://github.com/sabo)'s [Bard People's Insurrectionary Course Catalog](https://projects.eh.bard.edu/bpicc/).
 
 ### TODO
 * Scrape the [Bard College Barnes & Noble Bookstore](https://bard.bncollege.com/) for course textbooks
