@@ -14,6 +14,8 @@ This project was partially inspired by [@sabo](https://github.com/sabo)'s [Bard 
     * Add search functionality for identifying courses which fit into a user's schedule
     * Add user course recommendations based on schedule availabilities
     * Google Calendar integration, maybe?
+* Allow uploads of transcripts to identify gaps in remaining distrubution and program requirements
+  * Using the [Bard Information Portal](https://bip.bard.edu/) as well as the [Bard Guide to Academic Programs & Concentrations](http://inside.bard.edu/academic/courses/advising/)?
 
 ### Related Repositories:
 * [Course Catalog Parser](https://github.com/segalgouldn/course-catalog-parser)
