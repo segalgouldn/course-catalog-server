@@ -1,4 +1,4 @@
-# Noah Segal-Gould, 28 August 2018
+# Noah Segal-Gould, 4 February 2019
 
 from flask import url_for, session, redirect, request, render_template, jsonify, Flask
 from flask_pymongo import PyMongo
@@ -712,7 +712,8 @@ def get_semesters():
     all_semesters = ["fall2014", "spring2015",
                      "fall2015", "spring2016",
                      "fall2016", "spring2017",
-                     "fall2017", "spring2018", "current"]
+                     "fall2017", "spring2018",
+                     "fall2018", "current"]
     if search_query is not None:
         semesters = [semester for semester in all_semesters if search_query.replace("+", " ") in semester]
         return render_template('semesters.html', output=semesters)
